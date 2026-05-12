@@ -32,7 +32,7 @@ x-daemonless:
     additional environment variables in your container file:
     ```yaml
     services:
-      lldap:
+      paperlessngx:
         env:
           - PAPERLESS_ADMIN_USER=""
           - PAPERLESS_ADMIN_PASSWORD=""
