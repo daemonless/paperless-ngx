@@ -1,0 +1,12 @@
+#!/bin/sh
+# Paperless-ngx consumer s6 service
+
+readonly log_prefix="[cosumer]"
+
+echo "${log_prefix} Starting consumer..."
+
+LANG=en_US.UTF-8; export LANG
+
+# Standard start command for consumer
+exec /usr/local/bin/s6-setuidgid bsd cd /app/src \
+     /usr/local/bin/python3.12 manage.py document_consumer

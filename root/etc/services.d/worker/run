@@ -1,0 +1,13 @@
+#!/bin/sh
+# Paperless-ngx worker s6 service
+
+readonly log_prefix="[worker]"
+
+echo "${log_prefix} Starting worker..."
+
+LANG=en_US.UTF-8; export LANG
+
+# Standard start command for worker
+#/usr/local/bin/s6-notifyoncheck -c /healthz /usr/local/bin/s6-setuidgid bsd
+exec /usr/local/bin/s6-setuidgid bsd cd /app/src \
+     /app/.local/bin/celery --app paperless worker --loglevel INFO --without-mingle --without-gossip

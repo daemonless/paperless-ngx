@@ -1,0 +1,30 @@
+name: paperless-ngx-cit
+
+services:
+  paperless-ngx:
+    image: ghcr.io/daemonless/paperless-ngx:build
+    network_mode: host
+    restart: unless-stopped
+
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+      - PAPERLESS_ADMIN_USER=admin
+      - PAPERLESS_ADMIN_PASSWORD=secret_password
+
+#    volumes:
+#      - /path/to/containers/paperless-ngx:/config
+
+#    ports:
+#      - 8000:8000
+
+  redis:
+    image: ghcr.io/daemonless/redis:latest
+    restart: unless-stopped
+#    volumes:
+#      - /etc/localtime:/etc/localtime:ro
+#      - redis:/config
+
+#volumes:
+#  redis:

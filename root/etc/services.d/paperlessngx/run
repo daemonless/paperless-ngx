@@ -1,0 +1,14 @@
+#!/bin/sh
+# Paperless-ngx s6 service
+
+readonly log_prefix="[paperlessngx]"
+
+echo "${log_prefix} Starting paperless-ngx..."
+
+LANG=en_US.UTF-8; export LANG
+
+# Standard start command for paperless-ngx
+#/usr/local/bin/s6-notifyoncheck -c /healthz /usr/local/bin/s6-setuidgid bsd
+exec /usr/local/bin/s6-notifyoncheck -c /healthz /usr/local/bin/s6-setuidgid bsd \
+     cd /app/src /app/.local/bin/granian --interface asginl \
+     --ws --loop uvloop paperless.asgi:application

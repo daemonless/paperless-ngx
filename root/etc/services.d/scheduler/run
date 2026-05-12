@@ -1,0 +1,13 @@
+#!/bin/sh
+# Paperless-ngx scheduler s6 service
+
+readonly log_prefix="[scheduler]"
+
+echo "${log_prefix} Starting schduler..."
+
+LANG=en_US.UTF-8; export LANG
+
+# Standard start command for scheduler
+#/usr/local/bin/s6-notifyoncheck -c /healthz /usr/local/bin/s6-setuidgid bsd
+exec /usr/local/bin/s6-setuidgid bsd cd /app/src \
+     /app/.local/bin/celery --app paperless beat --loglevel DEBUG -s /config/data/celerybeat-schedule

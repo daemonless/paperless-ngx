@@ -1,0 +1,19 @@
+# dbuild configuration file
+# Place in .daemonless/config.yaml or .dbuild.yaml (higher priority)
+#
+# Full reference: https://github.com/daemonless/dbuild
+
+cit:
+  compose: true
+  mode: screenshot
+  ssim_threshold: 0.85
+  port: 8000
+  health: /
+build:
+  variants:
+    - tag: latest
+      tag_desc: Built from latest upstream release and latest FreeBSD packages.
+      containerfile: Containerfile
+      args:
+        BASE_VERSION: "15-latest"
+

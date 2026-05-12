@@ -1,0 +1,90 @@
+name: paperless-ngx
+
+x-daemonless:
+  title: "Paperless-ngx"
+  icon: ":simple-paperlessngx:"  # https://pictogrammers.com/library/mdi/ (material-) or https://simpleicons.org/ (simple-)
+  category: "Utilities"
+  description: "A community-supported open-source document management system that transforms your physical documents into a searchable online archive so you can keep, well, less paper."
+  upstream_url: "https://github.com/paperless-ngx/paperless-ngx"
+  web_url: "https://paperless-ngx.org/"
+  freshports_url: "https://www.freshports.org/net-p2p/paperless-ngx/"
+  user: "bsd"
+  mlock: false
+  community: "Discord:https://discord.gg/Kb9tkhecZT"
+  upstream_binary: true
+
+  docs:
+    env:
+      PUID: "User ID for the application process"
+      PGID: "Group ID for the application process"
+      TZ: "Timezone for the container"
+      PAPERLESS_ADMIN_USER: "Optional - Set name of the admin user on first start"
+      PAPERLESS_ADMIN_PASSWORD: "Optional - Set password of the admin user on first start"
+    volumes:
+      /config: "Configuration directory"
+      /config/media/documents: "Optional - the actual document store (originals, archive and thumbnails)"
+    ports:
+      8000: "Web UI"
+      5555: "Flower monitoring UI available at '/flower', optional"
+  notes: |
+    ## First time setup
+    To configure the admin user with a password during the first startup, you can define some
+    additional environment variables in your container file:
+    ```yaml
+    services:
+      lldap:
+        env:
+          - PAPERLESS_ADMIN_USER=""
+          - PAPERLESS_ADMIN_PASSWORD=""
+    ```
+    These 2 variables can be removed after the initial was done and paperless won't change an existing admin user's
+    password when these vars are defined.
+
+    ## Configuration
+    Configuration is best done using a `.env` file next to your compose.yaml.
+    If no `.env` file is in compose.yaml, paperless-ngx will use default values.
+
+    ## Documents directory
+    If you want to keep your documents in a separate ZFS filesystem, you can mount it at `/config/media/documents`.
+    This directoru should contain these 3 directories:
+    ```
+    - archive
+    - originals
+    - thumbnails
+    ```
+
+services:
+  paperlessngx:
+    image: ghcr.io/daemonless/paperless-ngx:latest
+    restart: unless-stopped
+
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+      - PAPERLESS_ADMIN_USER=
+      - PAPERLESS_ADMIN_PASSWORD=
+
+    env_file:
+      - paperless.env
+
+    depends_on:
+      - redis
+
+    volumes:
+      - /path/to/containers/paperless-ngx:/config
+      - /path/to/documents:/config/media/documents
+
+    ports:
+      - 8000:8000
+      - 5555:5555
+
+  redis:
+    image: ghcr.io/daemonless/redis:latest
+    restart: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - redis:/config
+
+volumes:
+  redis:
