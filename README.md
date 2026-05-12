@@ -40,7 +40,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=UTC
-      - PAPERLESS_ADMIN_USER=
+      - PAPERLESS_ADMIN_USER=admin
       - PAPERLESS_ADMIN_PASSWORD=<PAPERLESS_ADMIN_PASSWORD>
     volumes:
       - "/path/to/containers/paperless-ngx:/config"
@@ -60,7 +60,7 @@ podman run -d --name paperless-ngx \
   -e PUID=1000 \
   -e PGID=1000 \
   -e TZ=UTC \
-  -e PAPERLESS_ADMIN_USER= \
+  -e PAPERLESS_ADMIN_USER=admin \
   -e PAPERLESS_ADMIN_PASSWORD=<PAPERLESS_ADMIN_PASSWORD> \
   -v /path/to/containers/paperless-ngx:/config \
   -v /path/to/containers/paperless-ngx/config/media/documents:/config/media/documents \
@@ -80,7 +80,7 @@ podman run -d --name paperless-ngx \
       PUID: "1000"
       PGID: "1000"
       TZ: "UTC"
-      PAPERLESS_ADMIN_USER: ""
+      PAPERLESS_ADMIN_USER: "admin"
       PAPERLESS_ADMIN_PASSWORD: "<PAPERLESS_ADMIN_PASSWORD>"
     ports:
       - "8000:8000"
@@ -99,7 +99,7 @@ podman run -d --name paperless-ngx \
 | `PUID` | `1000` | User ID for the application process |
 | `PGID` | `1000` | Group ID for the application process |
 | `TZ` | `UTC` | Timezone for the container |
-| `PAPERLESS_ADMIN_USER` | `` | Optional - Set name of the admin user on first start |
+| `PAPERLESS_ADMIN_USER` | `admin` | Optional - Set name of the admin user on first start |
 | `PAPERLESS_ADMIN_PASSWORD` | `<PAPERLESS_ADMIN_PASSWORD>` | Optional - Set password of the admin user on first start |
 
 ### Volumes
@@ -121,12 +121,12 @@ To configure the admin user with a password during the first startup, you can de
 additional environment variables in your container file:
 ```yaml
 services:
-  lldap:
+  paperlessngx:
     env:
       - PAPERLESS_ADMIN_USER=""
       - PAPERLESS_ADMIN_PASSWORD=""
 ```
-These 2 variables can be removed after the initial was done and paperless won't change an existing admin user's
+These 2 variables can be removed after the initial setup was done and paperless won't change an existing admin user's
 password when these vars are defined.
 
 ## Configuration

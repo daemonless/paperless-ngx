@@ -37,7 +37,7 @@ x-daemonless:
           - PAPERLESS_ADMIN_USER=""
           - PAPERLESS_ADMIN_PASSWORD=""
     ```
-    These 2 variables can be removed after the initial was done and paperless won't change an existing admin user's
+    These 2 variables can be removed after the initial setup was done and paperless won't change an existing admin user's
     password when these vars are defined.
 
     ## Configuration
@@ -62,7 +62,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=UTC
-      - PAPERLESS_ADMIN_USER=
+      - PAPERLESS_ADMIN_USER=admin
       - PAPERLESS_ADMIN_PASSWORD=
 
     env_file:
