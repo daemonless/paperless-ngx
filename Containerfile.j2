@@ -61,9 +61,13 @@ LABEL org.opencontainers.image.title="Paperless-ngx" \
       org.opencontainers.image.vendor="daemonless" \
       org.opencontainers.image.authors="daemonless" \
       io.daemonless.category="Utilities" \
-      io.daemonless.port="8000" \
+{%- if ports %}
+      io.daemonless.port="{{ ports[0].target }}" \
+{%- endif %}
       io.daemonless.arch="${FREEBSD_ARCH}" \
-      io.daemonless.packages="${PACKAGES}"
+      io.daemonless.packages="${PACKAGES}" \
+      io.daemonless.upstream-url="${UPSTREAM_URL}" \
+      io.daemonless.upstream-jq="${UPSTREAM_JQ}"
       
 # Update to latest patch level
 RUN pkg update -r FreeBSD-base && \
