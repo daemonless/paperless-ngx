@@ -1,11 +1,11 @@
 {
-  "generated": "2026-05-12T02:24:14Z",
+  "generated": "2026-05-13T14:51:34Z",
   "image": "paperless-ngx",
   "tags": {
     "latest": {
       "app_version": "2.20.15",
       "arch": "amd64",
-      "generated": "2026-05-12T02:22:53Z",
+      "generated": "2026-05-13T14:48:40Z",
       "packages": {
         "dotnet": [],
         "freebsd": [
