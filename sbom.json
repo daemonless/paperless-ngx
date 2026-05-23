@@ -1,11 +1,11 @@
 {
-  "generated": "2026-05-13T14:51:34Z",
+  "generated": "2026-05-23T22:50:02Z",
   "image": "paperless-ngx",
   "tags": {
     "latest": {
       "app_version": "2.20.15",
       "arch": "amd64",
-      "generated": "2026-05-13T14:48:40Z",
+      "generated": "2026-05-23T22:48:43Z",
       "packages": {
         "dotnet": [],
         "freebsd": [
@@ -59,7 +59,7 @@
           },
           {
             "name": "FreeBSD-libcasper",
-            "version": "15.0"
+            "version": "15.0p9"
           },
           {
             "name": "FreeBSD-libexecinfo",
@@ -103,7 +103,7 @@
           },
           {
             "name": "FreeBSD-runtime",
-            "version": "15.0p8"
+            "version": "15.0p9"
           },
           {
             "name": "FreeBSD-tcpd",
@@ -115,7 +115,7 @@
           },
           {
             "name": "FreeBSD-utilities",
-            "version": "15.0p1"
+            "version": "15.0p9"
           },
           {
             "name": "FreeBSD-xz-lib",
@@ -143,7 +143,7 @@
           },
           {
             "name": "aom",
-            "version": "3.13.3"
+            "version": "3.14.0"
           },
           {
             "name": "avahi-app",
@@ -167,7 +167,7 @@
           },
           {
             "name": "ca_root_nss",
-            "version": "3.117_2"
+            "version": "3.123.1"
           },
           {
             "name": "cairo",
@@ -175,7 +175,7 @@
           },
           {
             "name": "cups",
-            "version": "2.4.19"
+            "version": "2.4.19_1"
           },
           {
             "name": "curl",
@@ -199,11 +199,11 @@
           },
           {
             "name": "expat",
-            "version": "2.8.0"
+            "version": "2.8.1"
           },
           {
             "name": "ffmpeg",
-            "version": "8.1,1"
+            "version": "8.1.1,1"
           },
           {
             "name": "fftw3",
@@ -235,7 +235,7 @@
           },
           {
             "name": "gettext-runtime",
-            "version": "1.0"
+            "version": "1.0_1"
           },
           {
             "name": "ghostscript10",
@@ -367,7 +367,7 @@
           },
           {
             "name": "libXext",
-            "version": "1.3.6,1"
+            "version": "1.3.7,1"
           },
           {
             "name": "libXfixes",
@@ -379,7 +379,7 @@
           },
           {
             "name": "libXi",
-            "version": "1.8.2,1"
+            "version": "1.8.3,1"
           },
           {
             "name": "libXrandr",
@@ -431,7 +431,7 @@
           },
           {
             "name": "libdrm",
-            "version": "2.4.131,1"
+            "version": "2.4.133,1"
           },
           {
             "name": "libdvdnav",
@@ -507,7 +507,7 @@
           },
           {
             "name": "libksba",
-            "version": "1.6.8"
+            "version": "1.7.0"
           },
           {
             "name": "liblqr-1",
@@ -643,7 +643,7 @@
           },
           {
             "name": "mariadb118-client",
-            "version": "11.8.6"
+            "version": "11.8.7"
           },
           {
             "name": "mesa-libs",
@@ -651,7 +651,7 @@
           },
           {
             "name": "mkfontscale",
-            "version": "1.2.3"
+            "version": "1.2.4"
           },
           {
             "name": "mpc",
@@ -679,7 +679,7 @@
           },
           {
             "name": "nss",
-            "version": "3.123.1"
+            "version": "3.124"
           },
           {
             "name": "oniguruma",
@@ -687,7 +687,7 @@
           },
           {
             "name": "openblas",
-            "version": "0.3.30,2"
+            "version": "0.3.33,2"
           },
           {
             "name": "openexr",
@@ -703,7 +703,7 @@
           },
           {
             "name": "openjph",
-            "version": "0.27.0"
+            "version": "0.27.2"
           },
           {
             "name": "optipng",
@@ -771,7 +771,7 @@
           },
           {
             "name": "postgresql18-client",
-            "version": "18.3"
+            "version": "18.4"
           },
           {
             "name": "py311-boost-libs",
@@ -779,7 +779,7 @@
           },
           {
             "name": "py311-numpy",
-            "version": "2.4.4_2,1"
+            "version": "2.4.4_3,1"
           },
           {
             "name": "py311-packaging",
@@ -863,7 +863,7 @@
           },
           {
             "name": "vulkan-loader",
-            "version": "1.4.350"
+            "version": "1.4.350.0"
           },
           {
             "name": "wayland",
