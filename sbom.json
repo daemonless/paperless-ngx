@@ -1,11 +1,11 @@
 {
-  "generated": "2026-06-24T19:51:09Z",
+  "generated": "2026-07-07T10:32:15Z",
   "image": "paperless-ngx",
   "tags": {
     "latest": {
       "app_version": "2.20.15",
       "arch": "amd64",
-      "generated": "2026-06-24T19:49:54Z",
+      "generated": "2026-07-07T10:30:56Z",
       "packages": {
         "dotnet": [],
         "freebsd": [
@@ -27,11 +27,11 @@
           },
           {
             "name": "FreeBSD-clibs",
-            "version": "15.0"
+            "version": "15.0p11"
           },
           {
             "name": "FreeBSD-clibs-lib32",
-            "version": "15.0"
+            "version": "15.0p11"
           },
           {
             "name": "FreeBSD-ctf-lib",
@@ -103,7 +103,7 @@
           },
           {
             "name": "FreeBSD-runtime",
-            "version": "15.0p10"
+            "version": "15.0p11"
           },
           {
             "name": "FreeBSD-tcpd",
@@ -115,7 +115,7 @@
           },
           {
             "name": "FreeBSD-utilities",
-            "version": "15.0p10"
+            "version": "15.0p11"
           },
           {
             "name": "FreeBSD-xz-lib",
@@ -123,7 +123,7 @@
           },
           {
             "name": "FreeBSD-zfs-lib",
-            "version": "15.0p10"
+            "version": "15.0p11"
           },
           {
             "name": "FreeBSD-zlib",
@@ -135,7 +135,7 @@
           },
           {
             "name": "ImageMagick7-nox11",
-            "version": "7.1.2.24"
+            "version": "7.1.2.25_1"
           },
           {
             "name": "Imath",
@@ -143,7 +143,7 @@
           },
           {
             "name": "aom",
-            "version": "3.14.1"
+            "version": "3.14.1_1"
           },
           {
             "name": "avahi-app",
@@ -179,7 +179,7 @@
           },
           {
             "name": "curl",
-            "version": "8.20.0"
+            "version": "8.21.0"
           },
           {
             "name": "dav1d",
@@ -199,11 +199,11 @@
           },
           {
             "name": "expat",
-            "version": "2.8.1"
+            "version": "2.8.2"
           },
           {
             "name": "ffmpeg",
-            "version": "8.1.2,1"
+            "version": "8.1.2_1,1"
           },
           {
             "name": "fftw3",
@@ -223,7 +223,7 @@
           },
           {
             "name": "gcc14",
-            "version": "14.2.0_4"
+            "version": "14.2.0_6"
           },
           {
             "name": "gdbm",
@@ -267,7 +267,7 @@
           },
           {
             "name": "gpgme",
-            "version": "2.1.0"
+            "version": "2.1.2"
           },
           {
             "name": "gpgmepp",
@@ -315,7 +315,7 @@
           },
           {
             "name": "jq",
-            "version": "1.8.1"
+            "version": "1.8.2"
           },
           {
             "name": "lame",
@@ -383,7 +383,7 @@
           },
           {
             "name": "libXrandr",
-            "version": "1.5.4"
+            "version": "1.5.5"
           },
           {
             "name": "libXrender",
@@ -407,7 +407,7 @@
           },
           {
             "name": "libass",
-            "version": "0.17.4_1"
+            "version": "0.17.5"
           },
           {
             "name": "libassuan",
@@ -459,11 +459,11 @@
           },
           {
             "name": "libevent",
-            "version": "2.1.12"
+            "version": "2.1.13"
           },
           {
             "name": "libffi",
-            "version": "3.5.2"
+            "version": "3.6.0"
           },
           {
             "name": "libfmt",
@@ -507,7 +507,7 @@
           },
           {
             "name": "libjxl",
-            "version": "0.11.2"
+            "version": "0.12.0"
           },
           {
             "name": "libksba",
@@ -547,7 +547,7 @@
           },
           {
             "name": "libpsl",
-            "version": "0.21.5_2"
+            "version": "0.22.0"
           },
           {
             "name": "libraw",
@@ -559,7 +559,7 @@
           },
           {
             "name": "libssh2",
-            "version": "1.11.1,3"
+            "version": "1.11.1_1,3"
           },
           {
             "name": "libtasn1",
@@ -595,7 +595,7 @@
           },
           {
             "name": "libva",
-            "version": "2.23.0"
+            "version": "2.24.0"
           },
           {
             "name": "libvdpau",
@@ -623,7 +623,7 @@
           },
           {
             "name": "libxkbcommon",
-            "version": "1.13.1"
+            "version": "1.13.2"
           },
           {
             "name": "libxml2",
@@ -643,7 +643,7 @@
           },
           {
             "name": "llvm19",
-            "version": "19.1.7_3"
+            "version": "19.1.7_4"
           },
           {
             "name": "lua53",
@@ -659,7 +659,7 @@
           },
           {
             "name": "mesa-libs",
-            "version": "26.0.6"
+            "version": "26.1.3"
           },
           {
             "name": "mkfontscale",
@@ -743,11 +743,11 @@
           },
           {
             "name": "pinentry",
-            "version": "1.3.2_2"
+            "version": "1.3.3"
           },
           {
             "name": "pinentry-curses",
-            "version": "1.3.2"
+            "version": "1.3.3"
           },
           {
             "name": "pixman",
@@ -786,24 +786,20 @@
             "version": "18.4"
           },
           {
-            "name": "py311-boost-libs",
+            "name": "py312-boost-libs",
             "version": "1.89.0"
           },
           {
-            "name": "py311-numpy",
+            "name": "py312-numpy",
             "version": "2.4.6_1,1"
           },
           {
-            "name": "py311-packaging",
+            "name": "py312-packaging",
             "version": "26.2"
           },
           {
             "name": "py312-sqlite3",
             "version": "3.12.13_10"
-          },
-          {
-            "name": "python311",
-            "version": "3.11.15_4"
           },
           {
             "name": "python312",
@@ -839,7 +835,7 @@
           },
           {
             "name": "spirv-llvm-translator-llvm19",
-            "version": "19.1.19"
+            "version": "19.1.20"
           },
           {
             "name": "spirv-tools",
@@ -847,7 +843,7 @@
           },
           {
             "name": "sqlite3",
-            "version": "3.53.1,1"
+            "version": "3.53.3,1"
           },
           {
             "name": "srt",
@@ -879,7 +875,7 @@
           },
           {
             "name": "vmaf",
-            "version": "3.1.0"
+            "version": "3.2.0"
           },
           {
             "name": "vulkan-loader",
@@ -899,7 +895,7 @@
           },
           {
             "name": "xkeyboard-config",
-            "version": "2.41_4"
+            "version": "2.48"
           },
           {
             "name": "xorgproto",
@@ -1322,7 +1318,7 @@
           },
           {
             "name": "pdftotext",
-            "version": "3.0.0"
+            "version": "4.0.0"
           },
           {
             "name": "pi_heif",
@@ -1648,7 +1644,7 @@
       "source": "upstream",
       "summary": {
         "dotnet": 0,
-        "freebsd": 226,
+        "freebsd": 225,
         "go": 0,
         "java": 0,
         "node": 11,
@@ -1656,7 +1652,7 @@
         "python": 141,
         "ruby": 0,
         "rust": 28,
-        "total": 406
+        "total": 405
       }
     }
   }
