@@ -8,11 +8,11 @@ chown -R bsd:bsd /config
 # Run a DB migration to make sure the database is initialized
 # and updated to the latest schema.
 echo [paperlessngx-migration] Running DB migration
-s6-setuidgid bsd cd /app/src /usr/local/bin/python3.12 manage.py migrate
+s6-setuidgid bsd cd /app/src/src uv run python manage.py migrate
 
 # Create superuser if env variable is defined
 if [ "x${PAPERLESS_ADMIN_USER}" != "x" ]; then
-  s6-setuidgid bsd cd /app/src /usr/local/bin/python3.12 manage.py manage_superuser
+  s6-setuidgid bsd cd /app/src/src uv run python manage.py manage_superuser
 
   echo "[paperlessngx-superuser] Superuser creation done"
 

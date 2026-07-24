@@ -5,8 +5,9 @@ readonly log_prefix="[cosumer]"
 
 echo "${log_prefix} Starting consumer..."
 
+HOME=/config; export HOME
 LANG=en_US.UTF-8; export LANG
 
 # Standard start command for consumer
-exec /usr/local/bin/s6-setuidgid bsd cd /app/src \
-     /usr/local/bin/python3.12 manage.py document_consumer
+exec /usr/local/bin/s6-setuidgid bsd cd /app/src/src \
+     /app/venv/bin/python manage.py document_consumer

@@ -18,13 +18,11 @@ A community-supported open-source document management system that transforms you
 | **Website** | [https://paperless-ngx.org/](https://paperless-ngx.org/) |
 
 ## Version Tags
-
 | Tag | Description | Best For |
 | :--- | :--- | :--- |
-| `latest` | **Upstream Binary**. Built from official release. | Most users. Matches Linux Docker behavior. |
+| `latest` | Built from latest upstream release and latest FreeBSD packages. | Most users — recommended. |
 
 ## Prerequisites
-
 Before deploying, ensure your host environment is ready. See the [Quick Start Guide](https://daemonless.io/guides/quick-start) for host setup instructions.
 
 ## Deployment
@@ -34,22 +32,83 @@ Before deploying, ensure your host environment is ready. See the [Quick Start Gu
 ```yaml
 services:
   paperless-ngx:
-    image: ghcr.io/daemonless/paperless-ngx:latest
+    image: "ghcr.io/daemonless/paperless-ngx:latest"
     container_name: paperless-ngx
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=UTC
-      - PAPERLESS_ADMIN_USER=admin
-      - PAPERLESS_ADMIN_PASSWORD=<PAPERLESS_ADMIN_PASSWORD>
+      - PUID=1000  # User ID for the application process
+      - PGID=1000  # Group ID for the application process
+      - TZ=UTC  # Timezone for the container
+      - PAPERLESS_ADMIN_USER=admin  # Optional - Set name of the admin user on first start
+      - PAPERLESS_ADMIN_PASSWORD=<PAPERLESS_ADMIN_PASSWORD>  # Optional - Set password of the admin user on first start
     volumes:
       - "/path/to/containers/paperless-ngx:/config"
-      - "/path/to/containers/paperless-ngx/config/media/documents:/config/media/documents"
     ports:
-      - 8000:8000
-      - 5555:5555
-    restart: unless-stopped
+      - "8000:8000"
+      - "5555:5555"
+    # always (not unless-stopped) so FreeBSD's podman rc.d auto-starts it at boot
+    restart: always
 ```
+
+Save as `compose.yaml`, then run `podman-compose up -d`.
+
+### AppJail Director
+**.env**:
+
+```
+# .env
+
+DIRECTOR_PROJECT=paperless-ngx
+PUID=1000
+PGID=1000
+TZ=UTC
+PAPERLESS_ADMIN_USER=admin
+PAPERLESS_ADMIN_PASSWORD=<PAPERLESS_ADMIN_PASSWORD>
+```
+
+**appjail-director.yml**:
+
+```yaml
+# appjail-director.yml
+
+options:
+  - virtualnet: ':<random> default'
+  - nat:
+services:
+  paperless-ngx:
+    name: paperless_ngx
+    options:
+      - container: 'boot args:--pull'
+      - expose: '8000:8000 proto:tcp'
+      - expose: '5555:5555 proto:tcp'
+    oci:
+      user: root
+      environment:
+        - PUID: !ENV '${PUID}'
+        - PGID: !ENV '${PGID}'
+        - TZ: !ENV '${TZ}'
+        - PAPERLESS_ADMIN_USER: !ENV '${PAPERLESS_ADMIN_USER}'
+        - PAPERLESS_ADMIN_PASSWORD: !ENV '${PAPERLESS_ADMIN_PASSWORD}'
+    volumes:
+      - paperless-ngx: /config
+volumes:
+  paperless-ngx:
+    device: '/path/to/containers/paperless-ngx'
+```
+
+**Makejail**:
+
+```
+# Makejail
+
+ARG tag=latest
+
+OPTION overwrite=force
+OPTION from=ghcr.io/daemonless/paperless-ngx:${tag}
+```
+
+Save the files above, then run `appjail-director up`.
+
+**Note**: Exposing ports in AppJail means that your service can be reached from remote hosts. If that is not your intention, do not expose the ports and communicate with the service using the IPv4 address assigned by the virtual network.
 
 ### Podman CLI
 
@@ -63,8 +122,64 @@ podman run -d --name paperless-ngx \
   -e PAPERLESS_ADMIN_USER=admin \
   -e PAPERLESS_ADMIN_PASSWORD=<PAPERLESS_ADMIN_PASSWORD> \
   -v /path/to/containers/paperless-ngx:/config \
-  -v /path/to/containers/paperless-ngx/config/media/documents:/config/media/documents \
   ghcr.io/daemonless/paperless-ngx:latest
+```
+
+Save as `run.sh`, then run `sh run.sh`.
+
+### AppJail
+
+```bash
+appjail oci run -Pd \
+  -o overwrite=force \
+  -o container="args:--pull" \
+  -o virtualnet=":<random> default" \
+  -o nat \
+  -o expose="8000:8000 proto:tcp" \
+  -o expose="5555:5555 proto:tcp" \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=UTC \
+  -e PAPERLESS_ADMIN_USER=admin \
+  -e PAPERLESS_ADMIN_PASSWORD=<PAPERLESS_ADMIN_PASSWORD> \
+  -o fstab="/path/to/containers/paperless-ngx /config <pseudofs>" \
+  ghcr.io/daemonless/paperless-ngx:latest paperless-ngx
+```
+
+Save as `run.sh`, then run `sh run.sh`.
+
+**Note**: Exposing ports in AppJail means that your service can be reached from remote hosts. If that is not your intention, do not expose the ports and communicate with the service using the IPv4 address assigned by the virtual network.
+
+### Bastille
+
+> [!WARNING]
+> Bastille's OCI support is **experimental**. It requires `buildah`, shares the host network stack (`inherit`), and persists image-declared volumes under `--data-path`.
+
+```yaml
+services:
+  paperless-ngx:
+    image: "ghcr.io/daemonless/paperless-ngx:latest"
+    container_name: paperless-ngx
+    network_mode: host  # jail shares host networking
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+      - PAPERLESS_ADMIN_USER=admin
+      - PAPERLESS_ADMIN_PASSWORD=<PAPERLESS_ADMIN_PASSWORD>
+```
+
+Save as `podman-compose.yml`, then run `bastille up`. Or via CLI:
+
+```bash
+bastille create -O \
+  --env PUID=1000 \
+  --env PGID=1000 \
+  --env TZ=UTC \
+  --env PAPERLESS_ADMIN_USER=admin \
+  --env PAPERLESS_ADMIN_PASSWORD=<PAPERLESS_ADMIN_PASSWORD> \
+  --data-path /path/to/containers/paperless-ngx \
+  paperless-ngx ghcr.io/daemonless/paperless-ngx:latest inherit
 ```
 
 ### Ansible
@@ -73,7 +188,7 @@ podman run -d --name paperless-ngx \
 - name: Deploy paperless-ngx
   containers.podman.podman_container:
     name: paperless-ngx
-    image: ghcr.io/daemonless/paperless-ngx:latest
+    image: "ghcr.io/daemonless/paperless-ngx:latest"
     state: started
     restart_policy: always
     env:
@@ -87,8 +202,11 @@ podman run -d --name paperless-ngx \
       - "5555:5555"
     volumes:
       - "/path/to/containers/paperless-ngx:/config"
-      - "/path/to/containers/paperless-ngx/config/media/documents:/config/media/documents"
 ```
+
+Save as `paperless-ngx-deploy.yaml`, then run `ansible-playbook paperless-ngx-deploy.yaml`.
+
+Access at: `http://localhost:8000`
 
 ## Parameters
 
@@ -107,7 +225,6 @@ podman run -d --name paperless-ngx \
 | Path | Description |
 |------|-------------|
 | `/config` | Configuration directory |
-| `/config/media/documents` | Optional - the actual document store (originals, archive and thumbnails) |
 
 ### Ports
 
@@ -116,6 +233,14 @@ podman run -d --name paperless-ngx \
 | `8000` | TCP | Web UI |
 | `5555` | TCP | Flower monitoring UI available at '/flower', optional |
 
+## Upgrade to v3
+### Pre-Requisites
+Upgrading to Paperless-ngx v3 can only be performed from version 2.20.15. If you are running an older version, please upgrade to v2.20.15 before proceeding with the v3 upgrade.
+### Breaking Changes
+Paperless-ngx v3 introduced some changes to the configuration.  
+Read the official [v3 Migration Guide](https://docs.paperless-ngx.com/migration-v3/) to make sure you adapt your configuration so that it works with v3.
+### Database migration
+The DB migration will run automatically when the container starts.
 ## First time setup
 To configure the admin user with a password during the first startup, you can define some
 additional environment variables in your container file:
@@ -145,7 +270,7 @@ This directoru should contain these 3 directories:
 
 **Architectures:** amd64
 **User:** `bsd` (UID/GID via PUID/PGID, defaults to 1000:1000)
-**Base:** FreeBSD 15.0
+**Base:** FreeBSD 15
 
 ---
 

@@ -27,6 +27,14 @@ x-daemonless:
       8000: "Web UI"
       5555: "Flower monitoring UI available at '/flower', optional"
   notes: |
+    ## Upgrade to v3
+    ### Pre-Requisites
+    Upgrading to Paperless-ngx v3 can only be performed from version 2.20.15. If you are running an older version, please upgrade to v2.20.15 before proceeding with the v3 upgrade.
+    ### Breaking Changes
+    Paperless-ngx v3 introduced some changes to the configuration.  
+    Read the official [v3 Migration Guide](https://docs.paperless-ngx.com/migration-v3/) to make sure you adapt your configuration so that it works with v3.
+    ### Database migration
+    The DB migration will run automatically when the container starts.
     ## First time setup
     To configure the admin user with a password during the first startup, you can define some
     additional environment variables in your container file:
@@ -73,7 +81,7 @@ services:
 
     volumes:
       - /path/to/containers/paperless-ngx:/config
-      - /path/to/documents:/config/media/documents
+#      - /path/to/documents:/config/media/documents
 
     ports:
       - 8000:8000

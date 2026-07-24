@@ -12,19 +12,10 @@ services:
       - TZ=UTC
       - PAPERLESS_ADMIN_USER=admin
       - PAPERLESS_ADMIN_PASSWORD=secret_password
-
-#    volumes:
-#      - /path/to/containers/paperless-ngx:/config
-
-#    ports:
-#      - 8000:8000
+      - PAPERLESS_SECRET_KEY=df736053ef1d69fb0d513e8a08aca7fe9760093f6f78610c3734a4651dde94d1d60670d1abe10ba91d8b150d0248f6d9c1065e9a8ee79b5de02a7cc02ff2bbc5
+      - PAPERLESS_DBENGINE=sqlite
+      - PAPERLESS_REDIS=redis://localhost:6379
 
   redis:
     image: ghcr.io/daemonless/redis:latest
     restart: unless-stopped
-#    volumes:
-#      - /etc/localtime:/etc/localtime:ro
-#      - redis:/config
-
-#volumes:
-#  redis:
