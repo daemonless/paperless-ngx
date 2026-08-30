@@ -5,9 +5,10 @@ readonly log_prefix="[scheduler]"
 
 echo "${log_prefix} Starting schduler..."
 
+HOME=/config; export HOME
 LANG=en_US.UTF-8; export LANG
 
 # Standard start command for scheduler
 #/usr/local/bin/s6-notifyoncheck -c /healthz /usr/local/bin/s6-setuidgid bsd
-exec /usr/local/bin/s6-setuidgid bsd cd /app/src \
-     /app/.local/bin/celery --app paperless beat --loglevel DEBUG -s /config/data/celerybeat-schedule
+exec /usr/local/bin/s6-setuidgid bsd cd /app/src/src \
+     /app/venv/bin/python -m celery --app paperless beat --loglevel DEBUG -s /config/data/celerybeat-schedule

@@ -5,6 +5,7 @@ readonly log_prefix="[flower]"
 
 echo "${log_prefix} Starting flower..."
 
+HOME=/config; export HOME
 LANG=en_US.UTF-8; export LANG
 
 # Standard start command for paperless-ngx
@@ -13,8 +14,8 @@ if [ "x${PAPERLESS_ENABLE_FLOWER}" != "x" ]; then
     echo "${log_prefix} Starting flower in 5s"
     sleep 5
 
-    exec /usr/local/bin/s6-setuidgid bsd cd /app/src \
-         /app/.local/bin/celery --app paperless flower --url-prefix=flower --loglevel INFO
+    exec /usr/local/bin/s6-setuidgid bsd cd /app/src/src \
+         /app/venv/bin/python -m celery --app paperless flower --url-prefix=flower --loglevel INFO
 else
     echo "${log_prefix} Not starting flower"
     # https://skarnet.org/software/s6/s6-svc.html

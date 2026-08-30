@@ -6,52 +6,333 @@ ARG TARBALL_JQ=".assets[0].browser_download_url"
 
 FROM ghcr.io/daemonless/base:${BASE_VERSION} AS builder
 
+# Use local package cache
+ARG PKG_CACHE_URL
+RUN <<CMD_EOF
+if [ -z "$PKG_CACHE_URL" ]; then
+    exit 0
+fi
+
+mkdir -p /usr/local/etc/pkg/repos || true
+cat <<EOF >/usr/local/etc/pkg/repos/FreeBSD.conf
+FreeBSD-Ports: {
+  url: "http://${PKG_CACHE_URL}/\${ABI}/latest",
+  mirror_type: "none",
+  signature_type: "fingerprints",
+  fingerprints: "/usr/share/keys/pkg",
+  enabled: yes
+}
+EOF
+CMD_EOF
+
 # Install build tools
-RUN pkg update && pkg install -y FreeBSD-set-devel rust gmake python312 libxslt && \
-    pkg clean -ay && rm -rf /var/cache/pkg/* /var/db/pkg/repos/*
+RUN <<CMD_EOF
+pkg update -r FreeBSD-base && pkg install -r FreeBSD-base -y FreeBSD-set-devel
+pkg install -y cmake git py312-pip rust
+pkg clean -ay
+rm -rf /var/cache/pkg/* /var/db/pkg/repos/*
+CMD_EOF
 
 # Install build dependencies
-RUN pkg update && pkg install -y pkgconf cmake gcc14 libxslt mariadb118-client postgresql18-client openblas libheif qpdf poppler && \
-    pkg clean -ay && rm -rf /var/cache/pkg/* /var/db/pkg/repos/*
+RUN <<CMD_EOF
+pkg install -y jpeg-turbo pngquant
+pkg clean -ay
+rm -rf /var/cache/pkg/* /var/db/pkg/repos/*
+CMD_EOF
+
+# Build libqpdf
+RUN <<CMD_EOF
+cat > /tmp/freebsd-toolchain.cmake <<'EOF'
+set(CMAKE_C_FLAGS_INIT "-ftls-model=initial-exec")
+set(CMAKE_CXX_FLAGS_INIT "-ftls-model=initial-exec -I/usr/local/include")
+EOF
+
+mkdir src && cd src
+git clone https://github.com/qpdf/qpdf.git --branch v12.4.1
+cd qpdf
+export CFLAGS="-ftls-model=initial-exec"
+export CXXFLAGS="-ftls-model=initial-exec"
+cmake -S . -B build \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/usr/local \
+  -DCMAKE_BUILD_PARALLEL_LEVEL=$(sysctl -n hw.ncpu) \
+  -DCMAKE_TOOLCHAIN_FILE=/tmp/freebsd-toolchain.cmake
+
+cmake --build build --parallel $(sysctl -n hw.ncpu)
+cmake --install build
+
+ldconfig -m /usr/local/lib
+
+cd build
+cpack -G TXZ
+
+# Cleanup to save space
+cd ..
+rm -fr qpdf
+CMD_EOF
+
+# Build pikepdf wheel
+RUN <<CMD_EOF
+cd /
+mkdir /wheels
+
+export CFLAGS="-ftls-model=initial-exec"
+export CXXFLAGS="-ftls-model=initial-exec -I/usr/local/include"
+export LDFLAGS="-L/usr/local/lib"
+export CMAKE_BUILD_PARALLEL_LEVEL=$(sysctl -n hw.ncpu)
+export CMAKE_ARGS="-DCMAKE_C_FLAGS=-ftls-model=initial-exec -DCMAKE_CXX_FLAGS=-ftls-model=initial-exec"
+pip wheel --no-deps --wheel-dir /wheels/ \
+  -Ccmake.define.CMAKE_TOOLCHAIN_FILE=/tmp/freebsd-toolchain.cmake \
+  pikepdf
+
+version=$(ls -1 /wheels/pikepdf*.whl  | sed -E 's/.*-([0-9]+\.[0-9]+\.[0-9]+)-.*/\1/')
+mv /wheels/pikepdf*.whl /wheels/pikepdf-${version}-py3-none-any.whl 
+
+# Cleanup to save space
+rm -fr /.cache
+CMD_EOF
+
+# Build uharfbuzz wheel
+RUN <<CMD_EOF
+cd /
+
+export CFLAGS="-ftls-model=initial-exec"
+export CXXFLAGS="-ftls-model=initial-exec -I/usr/local/include"
+export LDFLAGS="-L/usr/local/lib"
+export CMAKE_BUILD_PARALLEL_LEVEL=$(sysctl -n hw.ncpu)
+export CMAKE_ARGS="-DCMAKE_C_FLAGS=-ftls-model=initial-exec -DCMAKE_CXX_FLAGS=-ftls-model=initial-exec"
+pip wheel --wheel-dir wheels/ \
+  -Ccmake.define.CMAKE_TOOLCHAIN_FILE=/tmp/freebsd-toolchain.cmake \
+  uharfbuzz
+
+version=$(ls -1 /wheels/uharfbuzz*.whl  | sed -E 's/.*-([0-9]+\.[0-9]+\.[0-9]+)-.*/\1/')
+mv /wheels/uharfbuzz*.whl /wheels/uharfbuzz-${version}-py3-none-any.whl 
+
+# Build ocrmypdf wheel
+rm -fr /.cache
+CMD_EOF
+
+RUN <<CMD_EOF
+cd /
+
+export CFLAGS="-ftls-model=initial-exec"
+export CXXFLAGS="-ftls-model=initial-exec -I/usr/local/include"
+export LDFLAGS="-L/usr/local/lib"
+export CMAKE_BUILD_PARALLEL_LEVEL=$(sysctl -n hw.ncpu)
+export CMAKE_ARGS="-DCMAKE_C_FLAGS=-ftls-model=initial-exec -DCMAKE_CXX_FLAGS=-ftls-model=initial-exec"
+pip wheel --no-deps --wheel-dir wheels/ ocrmypdf
+
+version=$(ls -1 /wheels/ocrmypdf*.whl  | sed -E 's/.*-([0-9]+\.[0-9]+\.[0-9]+)-.*/\1/')
+mv /wheels/ocrmypdf*.whl /wheels/ocrmypdf-${version}-py3-none-any.whl 
+
+# Build ocrmypdf wheel
+rm -fr /.cache
+CMD_EOF
+
+# Build tantivy wheel
+RUN <<CMD_EOF
+cd /src
+
+export CFLAGS="-ftls-model=initial-exec"
+export CXXFLAGS="-ftls-model=initial-exec -I/usr/local/include"
+export CMAKE_ARGS="-DCMAKE_C_FLAGS=-ftls-model=initial-exec -DCMAKE_CXX_FLAGS=-ftls-model=initial-exec"
+python3.12 -m venv /tmp/venv-tantivy
+. /tmp/venv-tantivy/bin/activate
+
+pip install maturin
+git clone https://github.com/quickwit-oss/tantivy-py.git --branch 0.26.0
+cd tantivy-py
+maturin build --release
+
+mv target/wheels/tantivy-*.whl /wheels/tantivy-0.26.0-py3-none-any.whl
+
+rm -fr /.cache /.cargo
+CMD_EOF
+
+
+FROM ghcr.io/daemonless/base:${BASE_VERSION}
+
+
+# Use local package cache
+ARG PKG_CACHE_URL
+RUN <<CMD_EOF
+if [ -z "$PKG_CACHE_URL" ]; then
+    exit 0
+fi
+
+mkdir -p /usr/local/etc/pkg/repos || true
+cat <<EOF >/usr/local/etc/pkg/repos/FreeBSD.conf
+FreeBSD-Ports: {
+  url: "http://${PKG_CACHE_URL}/\${ABI}/latest",
+  mirror_type: "none",
+  signature_type: "fingerprints",
+  fingerprints: "/usr/share/keys/pkg",
+  enabled: yes
+}
+EOF
+CMD_EOF
+
+RUN <<CMD_EOF
+pkg update && pkg install -y uv git zip yq \
+  py312-pip \
+  py312-numpy \
+  py312-scipy \
+  py312-sqlite-vec \
+  py312-pytorch \
+  py312-twisted \
+  py312-pygments \
+  py312-psycopg \
+  py312-psycopg-c \
+  py312-networkx \
+  py312-pdfminer-six \
+  py312-llama-index-core \
+  py312-nltk \
+  py312-Babel \
+  yq libxslt \
+  mariadb118-client postgresql18-client openblas libheif poppler-utils \
+  py312-psycopg-pool \
+  py312-redis5 \
+  py312-hiredis \
+  py312-zope.interface \
+  py312-granian \
+  py312-uvloop \
+  py312-zxing-cpp \
+  py312-celery \
+  py312-msgpack \
+  py312-pyyaml \
+  py312-regex \
+  py312-jiter \
+  py312-safetensors \
+  py312-greenlet \
+  py312-time-machine \
+  py312-cffi \
+  py312-zstandard \
+  py312-cryptography \
+  py312-brotli \
+  py312-ujson \
+  py312-aiohttp \
+  py312-ruff \
+  py312-lxml \
+  py312-pillow-heif \
+  py312-scikit-learn \
+  py312-autobahn \
+  py312-prek \
+  py312-scipy \
+  py312-numpy \
+  py312-pillow \
+  py312-rapidfuzz \
+  py312-zensical \
+  py312-ninja \
+  py312-pywavelets \
+  py312-uharfbuzz \
+  py312-langdetect \
+  py312-tokenizers \
+  py312-tiktoken \
+  py312-tornado \
+  py312-pydantic2 \
+  py312-rpds-py \
+  py312-hf-xet \
+  py312-watchfiles \
+  py312-django52 \
+  py312-django-compression-middleware \
+  py312-pdftotext \
+  tesseract \
+  ghostscript10 \
+  ImageMagick7-nox11 \
+  unpaper \
+  pngquant
+pkg clean -ay
+rm -rf /var/cache/pkg/* /var/db/pkg/repos/*
+CMD_EOF
+
+# Copy artifacts from build stage
+COPY --from=builder /src/qpdf/build/qpdf*.tar.xz /tmp/qpdf.tar.xz
+COPY --from=builder /wheels /app/wheels
+
+RUN <<CMD_EOF
+tar xJvf /tmp/qpdf.tar.xz -C /usr/local --strip-components 1
+ldconfig -m /usr/local/lib
+CMD_EOF
 
 ARG UPSTREAM_URL
 ARG UPSTREAM_JQ
 ARG TARBALL_JQ
 
+ENV UV_PROJECT_ENVIRONMENT=/app/venv \
+    UV_LINK_MODE=copy
+
 # Fetch and extract source tarball
-RUN TARBALL=$(fetch -qo - "${UPSTREAM_URL}" | jq -r "${TARBALL_JQ}") && \
-    fetch -qo /tmp/paperless.tar.gz "${TARBALL}" && \
-    mkdir -m 0755 -p /src && \
-    tar -C /src -xzf /tmp/paperless.tar.gz --strip-components 1 && \
-    rm -f /tmp/paperless.tar.gz
+RUN <<CMD_EOF
+export TARBALL=$(fetch -qo - "${UPSTREAM_URL}" | jq -r "${TARBALL_JQ}")
+fetch -qo /tmp/paperless.tar.xz "${TARBALL}"
+mkdir -m 0755 -p /app/src
+tar -C /app/src -xJf /tmp/paperless.tar.xz --strip-components 1
+rm -f /tmp/paperless.tar.xz
+CMD_EOF
 
 # Setup bsd user for build
 RUN /etc/cont-init.d/10-usermod
 
-# Install pip
-RUN su -l bsd -c "/usr/local/bin/python3.12 -m ensurepip --user"
-
 # Add python3 symlink
-RUN cd /usr/local/bin && ln -sf python3.12 python3
+RUN cd /usr/local/bin && ln -sf python3.12 python3 && chmod -h a+rx python3
 
-WORKDIR /src
-RUN echo Patching requirements.txt && \
-    sed -i "" 's/sys_platform == '\''darwin'\''/sys_platform == '\''freebsd15'\''/' requirements.txt
-    
-RUN echo Installing requirements && \
-    su -l bsd -c "cd /src && FC=/usr/local/bin/gfortran14 /config/.local/bin/pip3 install -r requirements.txt --user"
+WORKDIR /app/src
 
-RUN echo Installing pdftotext && \
-    su -l bsd -c "/usr/local/bin/python3.12 -m pip install pdftotext --user"
+RUN <<CMD_EOF
+export FC=/usr/local/bin/gfortran14
+export CMAKE_EXECUTABLE=/usr/local/bin/cmake
+export SKBUILD_CMAKE_VERSION=""
+export SKBUILD_NINJA_VERSION=""
+export CMAKE_BUILD_PARALLEL_LEVEL=$(sysctl -n hw.ncpu)
 
+tomlq -t -i --arg new "sys_platform == 'freebsd15'" '.tool.uv.environments += [$new]' pyproject.toml
+tomlq -t -i 'del(.project.dependencies[] | select(test("^(pypdfium2|sqlite-vec|torch)"))) ' pyproject.toml
+tomlq -t -i '.tool.uv."exclude-dependencies" += ["pypdfium2","sqlite-vec","torch"]' pyproject.toml
+tomlq -t -i '.project.dependencies += ["granian[uvloop]~=2.7.6"]' pyproject.toml
+tomlq -t -i '
+  .tool.uv."find-links" += ["/app/wheels/"]
+  | .tool.uv."no-build-package" += ["tantivy"]
+' pyproject.toml
+tomlq -t -i 'del(.tool.uv.sources.torch)' pyproject.toml
+# tomlq -t -i '.tool.uv."no-build-package" += ["pypdfium2","sqlite-vec","pytorch"]' pyproject.toml
+# Replace versions
+tomlq -t -i '
+  .project.dependencies
+  |= map(
+    if test("^celery")                   then "celery~=5.3.1"
+    elif test("^ocrmypdf")               then "ocrmypdf>=17.11.0"
+    else . end
+  )
+# Remove dependencies on some transient dependencies
+' pyproject.toml
+# Replace versions
+tomlq -t -i '
+  .project."optional-dependencies".postgres
+  |= map(
+    if   test("^psycopg\\[c,pool\\]==")  then "psycopg[c,pool]~=3.3.0"
+    elif test("^psycopg-c==")            then "psycopg-c~=3.3.0"
+    elif test("^psycopg-pool==")         then "psycopg-pool~=3.3.1"
+    elif test("^redis\\[hiredis\\]")     then "redis[hiredis]~=5.3.1"
+    else . end
+  )
+# Remove dependencies on some transient dependencies
+' pyproject.toml
+tomlq -t -i '
+  .tool.uv."exclude-dependencies" += ["hiredis","msgpack","pyyaml","regex","jiter","safetensors","greenlet",
+    "zxing-cpp","time-machine","cffi","zstandard","cryptography","brotli","ujson","aiohttp","ruff","pi-heif",
+    "lxml","scikit-learn","autobahn","prek","scipy","numpy","pillow","rapidfuzz","zensical","ninja","uvloop",
+    "granian","pywavelets","uharfbuzz","langdetect","tokenizers","tiktoken","tornado","pydantic",
+    "llama-index-core","rpds-py","hf-xet","watchfiles"]
+' pyproject.toml
+uv venv --system-site-packages || exit 1
+uv lock --upgrade-package ocrmypdf --upgrade-package pikepdf --upgrade-package uharfbuzz --upgrade-package tantivy
+uv sync || exit 1
+uv export -o requirements.txt || exit 1
+uv cache clean
+CMD_EOF
 
-FROM ghcr.io/daemonless/base:${BASE_VERSION}
 
 ARG FREEBSD_ARCH=amd64
-ARG UPSTREAM_URL
-ARG UPSTREAM_JQ
-ARG PACKAGES="python312 py312-sqlite3 libxslt mariadb118-client postgresql18-client openblas libheif qpdf gnupg ImageMagick7-nox11 optipng tesseract unpaper poppler-utils liberation-fonts-ttf"
-ARG APP_VERSION="latest"
 
 LABEL org.opencontainers.image.title="Paperless-ngx" \
       org.opencontainers.image.description="A community-supported open-source document management system that transforms your physical documents into a searchable online archive so you can keep, well, less paper." \
@@ -69,24 +350,14 @@ LABEL org.opencontainers.image.title="Paperless-ngx" \
       io.daemonless.upstream-url="${UPSTREAM_URL}" \
       io.daemonless.upstream-jq="${UPSTREAM_JQ}"
       
-# Update to latest patch level
-RUN pkg update -r FreeBSD-base && \
-    pkg upgrade -y -r FreeBSD-base && \
-    pkg clean -ay && \
-    rm -rf /var/cache/pkg/* /var/db/pkg/repos/*
-
-# Install run dependencies
-RUN pkg update && \
-    pkg install -y ${PACKAGES} && \
-    pkg clean -ay && \
-    rm -rf /var/cache/pkg/* /var/db/pkg/repos/*
-
-# Add python3 symlink
-RUN cd /usr/local/bin && ln -sf python3.12 python3
-
-COPY --from=builder --chown=bsd:bsd --chmod=755 /config/.local/ /app/.local/
-COPY --from=builder --chown=bsd:bsd --chmod=755 /src/static/ /app/static/
-COPY --from=builder --chown=bsd:bsd --chmod=755 /src/src/ /app/src/
+# Update to latest patch level and install PAM
+RUN <<CMD_EOF
+pkg update -r FreeBSD-base
+pkg upgrade -y -r FreeBSD-base
+pkg install -y -r FreeBSD-base FreeBSD-pam
+pkg clean -ay
+rm -rf /var/cache/pkg/* /var/db/pkg/repos/*
+CMD_EOF
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -95,11 +366,20 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PNGX_CONTAINERIZED=1 \
     # https://docs.astral.sh/uv/reference/settings/#link-mode
     UV_LINK_MODE=copy \
-    PYTHONPATH=/app/.local/lib/python3.12/site-packages
+    # PYTHONPATH=/app/.local/lib/python3.12/site-packages \
+    NLTK_DATA=/app/nltk_data \
+    UV_PROJECT_ENVIRONMENT=/app/venv \
+    UV_CACHE_DIR=/app/.cache \
+    UV_FROZEN=1
 
 # Install NLTK data
-RUN echo "Installing NLTK_DATA ..." && \
-    su -m bsd -c "mkdir /app/nltk_data && cd /app && /usr/local/bin/python3.12 -m nltk.downloader -d /app/nltk_data snowball_data stopwords punkt punkt_tab"
+RUN <<CMD_EOF
+find /usr/local -type d -exec chmod 755 {} +
+mkdir -p /app/nltk_data
+chown -R bsd:bsd /app
+echo "Installing NLTK_DATA ..."
+su -m bsd -c "cd /app/src && /app/venv/bin/python  -m nltk.downloader -d /app/nltk_data snowball_data stopwords punkt_tab"
+CMD_EOF
 
 ENV PAPERLESS_NLTK_DIR=/app/nltk_data \
     PAPERLESS_ENABLE_NLTK=true \
@@ -111,13 +391,18 @@ ENV PAPERLESS_NLTK_DIR=/app/nltk_data \
     GRANIAN_HOST=0.0.0.0
 
 # Extract version information
-RUN su -m bsd -c "cd /app/src && /usr/local/bin/python3.12 -c 'from paperless import version; print(version.__full_version_str__)' > /app/version"
+RUN su -m bsd -c "cd /app/src/src && uv run python -c 'from paperless import version; print(version.__full_version_str__)' > /app/version"
 
 # Copy root filesystem
 COPY root/ /
 
 ## Set permissions
 RUN chmod +x /etc/services.d/*/run /etc/cont-init.d/* /healthz 2>/dev/null || true
+
+## Temporary fix for regex timeout
+RUN <<CMD_EOF
+sed -i "" 's/MATCH_REGEX_TIMEOUT_SECONDS", 0.1/MATCH_REGEX_TIMEOUT_SECONDS", 1.0/' /app/src/src/documents/regex.py
+CMD_EOF
 
 # --- Expose (Injected by Generator) ---
 {%- if ports %}
