@@ -9,7 +9,10 @@ FROM ghcr.io/daemonless/base:${BASE_VERSION} AS builder
 # Use local package cache
 ARG PKG_CACHE_URL
 RUN <<CMD_EOF
-### todo: exit if PKG_CACHE_URL is not set
+if [ -z "$PKG_CACHE_URL" ]; then
+    exit 0
+fi
+
 mkdir -p /usr/local/etc/pkg/repos || true
 cat <<EOF >/usr/local/etc/pkg/repos/FreeBSD.conf
 FreeBSD-Ports: {
@@ -143,51 +146,8 @@ maturin build --release
 
 mv target/wheels/tantivy-*.whl /wheels/tantivy-0.26.0-py3-none-any.whl
 
-# Build ocrmypdf wheel
 rm -fr /.cache /.cargo
 CMD_EOF
-
-# # Install build dependencies
-# RUN <<CMD_EOF
-# pkg install -y pybind11
-# pkg clean -ay
-# rm -rf /var/cache/pkg/* /var/db/pkg/repos/*
-# CMD_EOF
-
-# # Build pngquant-py wheel
-# RUN <<CMD_EOF
-# cd /
-
-# export CFLAGS="-ftls-model=initial-exec"
-# export CXXFLAGS="-ftls-model=initial-exec -I/usr/local/include"
-# export LDFLAGS="-L/usr/local/lib"
-# export CMAKE_BUILD_PARALLEL_LEVEL=$(sysctl -n hw.ncpu)
-# export CMAKE_ARGS="-DCMAKE_C_FLAGS=-ftls-model=initial-exec -DCMAKE_CXX_FLAGS=-ftls-model=initial-exec"
-
-# # Download the source without building
-# pip download jbigkit-py --no-binary jbigkit-py --no-deps -d ./jbigkit-src
-
-# # Extract it
-# cd ./jbigkit-src
-# tar xf jbigkit-py-*.tar.gz   # (or unzip the .zip)
-# cd jbigkit-py-*/
-
-# # Add the missing include at the top of the header file
-# sed -i '' '1i\
-# #include <memory>
-# ' src/binding/JbgDecoder.hpp
-# mydir=$(pwd)
-# cd ../..
-
-# pip wheel --wheel-dir wheels/ \
-#   -Ccmake.define.CMAKE_TOOLCHAIN_FILE=/tmp/freebsd-toolchain.cmake \
-#   pngquant-py ${mydir} || exit 1
-
-# version=$(ls -1 /wheels/pngquant_py*.whl  | sed -E 's/.*-([0-9]+\.[0-9]+\.[0-9]+)-.*/\1/')
-# mv /wheels/pngquant_py*.whl /wheels/pngquant_py-${version}-py3-none-any.whl || exit 1
-# version=$(ls -1 /wheels/jbigkit_py*.whl  | sed -E 's/.*-([0-9]+\.[0-9]+\.[0-9]+)-.*/\1/')
-# mv /wheels/jbigkit_py*.whl /wheels/jbigkit_py-${version}-py3-none-any.whl || exit 1
-# CMD_EOF
 
 
 FROM ghcr.io/daemonless/base:${BASE_VERSION}
@@ -196,7 +156,10 @@ FROM ghcr.io/daemonless/base:${BASE_VERSION}
 # Use local package cache
 ARG PKG_CACHE_URL
 RUN <<CMD_EOF
-### todo: exit if PKG_CACHE_URL is not set
+if [ -z "$PKG_CACHE_URL" ]; then
+    exit 0
+fi
+
 mkdir -p /usr/local/etc/pkg/repos || true
 cat <<EOF >/usr/local/etc/pkg/repos/FreeBSD.conf
 FreeBSD-Ports: {
