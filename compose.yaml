@@ -18,8 +18,14 @@ x-daemonless:
       PUID: "User ID for the application process"
       PGID: "Group ID for the application process"
       TZ: "Timezone for the container"
-      PAPERLESS_ADMIN_USER: "Optional - Set name of the admin user on first start"
-      PAPERLESS_ADMIN_PASSWORD: "Optional - Set password of the admin user on first start"
+      PAPERLESS_ADMIN_USER:
+        desc: "Set name of the admin user on first start"
+        optional: true
+        level: primary
+      PAPERLESS_ADMIN_PASSWORD:
+        desc: "Set password of the admin user on first start"
+        optional: true
+        level: primary
     volumes:
       /config: "Configuration directory"
       /config/media/documents: "Optional - the actual document store (originals, archive and thumbnails)"
