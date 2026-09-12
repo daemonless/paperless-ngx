@@ -221,7 +221,6 @@ pkg update && pkg install -y uv git zip yq \
   py312-lxml \
   py312-pillow-heif \
   py312-scikit-learn \
-  py312-autobahn \
   py312-prek \
   py312-scipy \
   py312-numpy \
@@ -326,7 +325,7 @@ tomlq -t -i '
 tomlq -t -i '
   .tool.uv."exclude-dependencies" += ["hiredis","msgpack","pyyaml","regex","jiter","safetensors","greenlet",
     "zxing-cpp","time-machine","cffi","zstandard","cryptography","brotli","ujson","aiohttp","ruff","pi-heif",
-    "lxml","scikit-learn","autobahn","prek","scipy","numpy","pillow","rapidfuzz","zensical","ninja","uvloop",
+    "lxml","scikit-learn","prek","scipy","numpy","pillow","rapidfuzz","zensical","ninja","uvloop",
     "granian","pywavelets","uharfbuzz","langdetect","tokenizers","tiktoken","tornado","pydantic",
     "llama-index-core","rpds-py","hf-xet","watchfiles"]
 ' pyproject.toml

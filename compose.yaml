@@ -106,7 +106,10 @@ services:
 
     volumes:
       - ${CONFIG_LOCATION}:/config
-      - ${DOCUMENTS_LOCATION}:/config/media/documents
+
+    ports:
+      - 8000:8000
+      - 5555:5555
 
   redis:
     image: ghcr.io/daemonless/redis:latest
