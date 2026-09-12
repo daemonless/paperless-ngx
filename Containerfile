@@ -221,6 +221,7 @@ pkg update && pkg install -y uv git zip yq \
   py312-lxml \
   py312-pillow-heif \
   py312-scikit-learn \
+  py312-hatchling \
   py312-prek \
   py312-scipy \
   py312-numpy \
@@ -331,7 +332,10 @@ tomlq -t -i '
 ' pyproject.toml
 uv venv --system-site-packages || exit 1
 uv lock --upgrade-package ocrmypdf --upgrade-package pikepdf --upgrade-package uharfbuzz --upgrade-package tantivy
-uv sync || exit 1
+# autobahn (via daphne) has no FreeBSD wheel and ports dropped py-autobahn, so it
+# builds from sdist: skip its NVX C extension (no compiler in the image) and
+# build without isolation so its cffi/hatchling build deps come from pkg.
+AUTOBAHN_USE_NVX=0 uv sync --no-build-isolation-package autobahn || exit 1
 uv export -o requirements.txt || exit 1
 uv cache clean
 CMD_EOF
