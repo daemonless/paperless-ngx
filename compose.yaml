@@ -12,12 +12,29 @@ x-daemonless:
   mlock: false
   community: "Discord:https://discord.gg/Kb9tkhecZT"
   upstream_binary: true
+  # Redis sidecar for the AppJail director bundle; host networking so
+  # paperless reaches it on localhost, as under podman.
+  appjail:
+    director:
+      options:
+        - alias:
+        - ip4_inherit:
+    depends_on:
+      - name: paperless-redis
+        image: ghcr.io/daemonless/redis:latest
+        volumes:
+          redis_data: /config
 
   docs:
     env:
       PUID: "User ID for the application process"
       PGID: "Group ID for the application process"
       TZ: "Timezone for the container"
+      CONFIG_LOCATION: "Path to store configuration, database and (by default) documents"
+      DOCUMENTS_LOCATION:
+        desc: "Optional separate document store (originals, archive, thumbnails), e.g. its own ZFS filesystem"
+        optional: true
+      REDIS_DATA_LOCATION: "Path to store the redis data"
       PAPERLESS_ADMIN_USER:
         desc: "Set name of the admin user on first start"
         optional: true
@@ -37,7 +54,7 @@ x-daemonless:
     ### Pre-Requisites
     Upgrading to Paperless-ngx v3 can only be performed from version 2.20.15. If you are running an older version, please upgrade to v2.20.15 before proceeding with the v3 upgrade.
     ### Breaking Changes
-    Paperless-ngx v3 introduced some changes to the configuration.  
+    Paperless-ngx v3 introduced some changes to the configuration.
     Read the official [v3 Migration Guide](https://docs.paperless-ngx.com/migration-v3/) to make sure you adapt your configuration so that it works with v3.
     ### Database migration
     The DB migration will run automatically when the container starts.
@@ -71,34 +88,30 @@ services:
   paperlessngx:
     image: ghcr.io/daemonless/paperless-ngx:latest
     restart: unless-stopped
+    network_mode: host
 
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=UTC
-      - PAPERLESS_ADMIN_USER=admin
-      - PAPERLESS_ADMIN_PASSWORD=
+      - TZ=${TZ:-UTC}
+      - PAPERLESS_REDIS=redis://localhost:6379
+      - PAPERLESS_ADMIN_USER=${PAPERLESS_ADMIN_USER}
+      - PAPERLESS_ADMIN_PASSWORD=${PAPERLESS_ADMIN_PASSWORD}
 
     env_file:
-      - paperless.env
+      - .env
 
     depends_on:
       - redis
 
     volumes:
-      - /path/to/containers/paperless-ngx:/config
-#      - /path/to/documents:/config/media/documents
-
-    ports:
-      - 8000:8000
-      - 5555:5555
+      - ${CONFIG_LOCATION}:/config
+      - ${DOCUMENTS_LOCATION}:/config/media/documents
 
   redis:
     image: ghcr.io/daemonless/redis:latest
     restart: unless-stopped
+    network_mode: host
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - redis:/config
-
-volumes:
-  redis:
+      - ${REDIS_DATA_LOCATION}:/config
