@@ -1,11 +1,11 @@
 {
-  "generated": "2026-09-04T14:03:23Z",
+  "generated": "2026-09-12T20:07:21Z",
   "image": "paperless-ngx",
   "tags": {
     "latest": {
       "app_version": "3.1.3",
       "arch": "amd64",
-      "generated": "2026-09-04T13:58:05Z",
+      "generated": "2026-09-12T20:02:31Z",
       "packages": {
         "dotnet": [],
         "freebsd": [
@@ -346,14 +346,14 @@
               "MIT"
             ],
             "name": "curl",
-            "version": "8.21.0"
+            "version": "8.22.0"
           },
           {
             "licenses": [
               "BSD2CLAUSE"
             ],
             "name": "dav1d",
-            "version": "1.5.3_1"
+            "version": "1.5.4"
           },
           {
             "licenses": [
@@ -381,7 +381,7 @@
               "MIT"
             ],
             "name": "expat",
-            "version": "2.8.3"
+            "version": "2.8.4"
           },
           {
             "licenses": [
@@ -389,7 +389,7 @@
               "LGPL3+"
             ],
             "name": "ffmpeg",
-            "version": "8.1.2_3,1"
+            "version": "9.0.1,1"
           },
           {
             "licenses": [
@@ -463,7 +463,7 @@
               "LGPL21"
             ],
             "name": "geos",
-            "version": "3.14.1"
+            "version": "3.15.0"
           },
           {
             "licenses": [
@@ -559,7 +559,7 @@
               "EPL"
             ],
             "name": "graphviz",
-            "version": "15.1.1_2"
+            "version": "16.1.0"
           },
           {
             "licenses": [
@@ -602,7 +602,7 @@
               "GPLv2+"
             ],
             "name": "hwdata",
-            "version": "0.410,1"
+            "version": "0.411,1"
           },
           {
             "licenses": [
@@ -667,7 +667,7 @@
               "MIT"
             ],
             "name": "jsoncpp",
-            "version": "1.9.6_1"
+            "version": "1.9.8"
           },
           {
             "licenses": [
@@ -695,7 +695,7 @@
               "APACHE20"
             ],
             "name": "lerc",
-            "version": "4.1.1"
+            "version": "4.2.0"
           },
           {
             "licenses": [
@@ -860,13 +860,6 @@
           },
           {
             "licenses": [
-              "CC0-1.0"
-            ],
-            "name": "libargon2",
-            "version": "20190702_1"
-          },
-          {
-            "licenses": [
               "ISCL"
             ],
             "name": "libass",
@@ -912,7 +905,7 @@
               "MIT"
             ],
             "name": "libdeflate",
-            "version": "1.25"
+            "version": "1.26"
           },
           {
             "licenses": [
@@ -1034,7 +1027,7 @@
               "LGPL3+"
             ],
             "name": "libheif",
-            "version": "1.22.2_1"
+            "version": "1.22.2_2"
           },
           {
             "licenses": [
@@ -1063,7 +1056,7 @@
               "GPLv3+"
             ],
             "name": "libimagequant",
-            "version": "4.4.1_6"
+            "version": "4.4.1_7"
           },
           {
             "licenses": [
@@ -1086,7 +1079,7 @@
               "GPLv3"
             ],
             "name": "libksba",
-            "version": "1.8.0"
+            "version": "1.8.1"
           },
           {
             "licenses": [
@@ -1172,7 +1165,7 @@
               "LGPL20"
             ],
             "name": "librsvg2-rust",
-            "version": "2.62.3_1"
+            "version": "2.62.3_2"
           },
           {
             "licenses": [
@@ -1180,13 +1173,6 @@
             ],
             "name": "librttopo",
             "version": "1.1.0"
-          },
-          {
-            "licenses": [
-              "ISCL"
-            ],
-            "name": "libsodium",
-            "version": "1.0.22"
           },
           {
             "licenses": [
@@ -1316,7 +1302,7 @@
               "MIT"
             ],
             "name": "libxml2",
-            "version": "2.15.3"
+            "version": "2.15.4"
           },
           {
             "licenses": [
@@ -1358,7 +1344,7 @@
               "MIT"
             ],
             "name": "llhttp",
-            "version": "9.4.2"
+            "version": "9.4.3"
           },
           {
             "licenses": [
@@ -1398,7 +1384,7 @@
               "MIT"
             ],
             "name": "mesa-libs",
-            "version": "26.2.1"
+            "version": "26.2.2"
           },
           {
             "licenses": [
@@ -1491,7 +1477,7 @@
               "MPL20"
             ],
             "name": "nss",
-            "version": "3.128"
+            "version": "3.128_1"
           },
           {
             "licenses": [
@@ -1519,7 +1505,7 @@
               "BSD3CLAUSE"
             ],
             "name": "openexr",
-            "version": "3.4.15"
+            "version": "3.4.15_1"
           },
           {
             "licenses": [
@@ -1540,7 +1526,7 @@
               "BSD2CLAUSE"
             ],
             "name": "openjph",
-            "version": "0.30.1"
+            "version": "0.31.0"
           },
           {
             "licenses": [
@@ -1653,7 +1639,7 @@
               "BSD3CLAUSE"
             ],
             "name": "pcre2",
-            "version": "10.47_1"
+            "version": "10.48"
           },
           {
             "licenses": [
@@ -1800,13 +1786,6 @@
           },
           {
             "licenses": [
-              "APACHE20"
-            ],
-            "name": "py312-PyNaCl",
-            "version": "1.6.2_1"
-          },
-          {
-            "licenses": [
               "PSFL"
             ],
             "name": "py312-aiohappyeyeballs",
@@ -1817,7 +1796,7 @@
               "APACHE20"
             ],
             "name": "py312-aiohttp",
-            "version": "3.14.1_1"
+            "version": "3.14.3"
           },
           {
             "licenses": [
@@ -1831,7 +1810,7 @@
               "MIT"
             ],
             "name": "py312-aiosqlite",
-            "version": "0.19.0"
+            "version": "0.22.1"
           },
           {
             "licenses": [
@@ -1852,14 +1831,14 @@
               "MIT"
             ],
             "name": "py312-annotated-types",
-            "version": "0.7.0"
+            "version": "0.8.0"
           },
           {
             "licenses": [
               "MIT"
             ],
             "name": "py312-anyio",
-            "version": "4.14.2"
+            "version": "4.15.0"
           },
           {
             "licenses": [
@@ -1873,21 +1852,7 @@
               "APACHE20"
             ],
             "name": "py312-argcomplete",
-            "version": "3.7.0"
-          },
-          {
-            "licenses": [
-              "MIT"
-            ],
-            "name": "py312-argon2-cffi",
-            "version": "25.1.0"
-          },
-          {
-            "licenses": [
-              "MIT"
-            ],
-            "name": "py312-argon2-cffi-bindings",
-            "version": "25.1.0"
+            "version": "3.7.2"
           },
           {
             "licenses": [
@@ -1912,13 +1877,6 @@
           },
           {
             "licenses": [
-              "BSD2CLAUSE"
-            ],
-            "name": "py312-autobahn",
-            "version": "25.12.2"
-          },
-          {
-            "licenses": [
               "MIT"
             ],
             "name": "py312-banks",
@@ -1926,17 +1884,10 @@
           },
           {
             "licenses": [
-              "MIT"
-            ],
-            "name": "py312-base58",
-            "version": "2.1.1_1"
-          },
-          {
-            "licenses": [
               "APACHE20"
             ],
             "name": "py312-bcrypt",
-            "version": "5.0.0_7"
+            "version": "5.0.0_8"
           },
           {
             "licenses": [
@@ -1968,17 +1919,10 @@
           },
           {
             "licenses": [
-              "MIT"
-            ],
-            "name": "py312-cbor2",
-            "version": "6.1.4"
-          },
-          {
-            "licenses": [
               "BSD3CLAUSE"
             ],
             "name": "py312-celery",
-            "version": "5.3.6_2"
+            "version": "5.6.3"
           },
           {
             "licenses": [
@@ -2056,7 +2000,7 @@
               "BSD3CLAUSE"
             ],
             "name": "py312-cryptography",
-            "version": "49.0.0,1"
+            "version": "50.0.1,1"
           },
           {
             "licenses": [
@@ -2125,13 +2069,6 @@
             "licenses": [
               "MIT"
             ],
-            "name": "py312-ecdsa",
-            "version": "0.19.2"
-          },
-          {
-            "licenses": [
-              "MIT"
-            ],
             "name": "py312-eval-type-backport",
             "version": "0.4.0"
           },
@@ -2140,7 +2077,7 @@
               "PD"
             ],
             "name": "py312-filelock",
-            "version": "3.32.0"
+            "version": "3.32.5"
           },
           {
             "licenses": [
@@ -2154,7 +2091,7 @@
               "MIT"
             ],
             "name": "py312-fonttools",
-            "version": "4.63.0"
+            "version": "4.64.0"
           },
           {
             "licenses": [
@@ -2189,7 +2126,7 @@
               "BSD3CLAUSE"
             ],
             "name": "py312-granian",
-            "version": "2.7.6_1"
+            "version": "2.7.6_2"
           },
           {
             "licenses": [
@@ -2197,28 +2134,28 @@
               "PSFL"
             ],
             "name": "py312-greenlet",
-            "version": "3.5.3"
+            "version": "3.5.5"
           },
           {
             "licenses": [
               "ISCL"
             ],
             "name": "py312-griffe",
-            "version": "2.2.0"
+            "version": "2.3.0"
           },
           {
             "licenses": [
               "ISCL"
             ],
             "name": "py312-griffecli",
-            "version": "2.2.0"
+            "version": "2.3.0"
           },
           {
             "licenses": [
               "ISCL"
             ],
             "name": "py312-griffelib",
-            "version": "2.2.0"
+            "version": "2.3.0"
           },
           {
             "licenses": [
@@ -2232,14 +2169,21 @@
               "MIT"
             ],
             "name": "py312-h2",
-            "version": "4.3.0"
+            "version": "4.4.1"
+          },
+          {
+            "licenses": [
+              "MIT"
+            ],
+            "name": "py312-hatchling",
+            "version": "1.32.0"
           },
           {
             "licenses": [
               "APACHE20"
             ],
             "name": "py312-hf-xet",
-            "version": "1.6.0"
+            "version": "1.6.0_1"
           },
           {
             "licenses": [
@@ -2295,7 +2239,7 @@
               "BSD3CLAUSE"
             ],
             "name": "py312-idna",
-            "version": "3.18"
+            "version": "3.19"
           },
           {
             "licenses": [
@@ -2309,7 +2253,7 @@
               "MIT"
             ],
             "name": "py312-jiter",
-            "version": "0.16.0_1"
+            "version": "0.16.0_2"
           },
           {
             "licenses": [
@@ -2323,14 +2267,14 @@
               "BSD3CLAUSE"
             ],
             "name": "py312-kiwisolver",
-            "version": "1.5.0,1"
+            "version": "1.5.1,1"
           },
           {
             "licenses": [
               "BSD3CLAUSE"
             ],
             "name": "py312-kombu",
-            "version": "5.3.7_2"
+            "version": "5.6.2"
           },
           {
             "licenses": [
@@ -2344,28 +2288,28 @@
               "MIT"
             ],
             "name": "py312-llama-index-core",
-            "version": "0.14.23"
+            "version": "0.14.24"
           },
           {
             "licenses": [
               "MIT"
             ],
             "name": "py312-llama-index-instrumentation",
-            "version": "0.5.0"
+            "version": "0.6.0"
           },
           {
             "licenses": [
               "MIT"
             ],
             "name": "py312-llama-index-workflows",
-            "version": "2.22.2"
+            "version": "2.23.3"
           },
           {
             "licenses": [
               "BSD3CLAUSE"
             ],
             "name": "py312-lxml",
-            "version": "6.1.1"
+            "version": "6.1.3"
           },
           {
             "licenses": [
@@ -2393,7 +2337,7 @@
               "MIT"
             ],
             "name": "py312-marshmallow",
-            "version": "4.3.0"
+            "version": "4.3.1"
           },
           {
             "licenses": [
@@ -2421,7 +2365,7 @@
               "APACHE20"
             ],
             "name": "py312-msgpack",
-            "version": "1.2.1"
+            "version": "1.2.2"
           },
           {
             "licenses": [
@@ -2442,7 +2386,7 @@
               "MIT"
             ],
             "name": "py312-narwhals",
-            "version": "2.24.0"
+            "version": "2.25.0"
           },
           {
             "licenses": [
@@ -2501,21 +2445,21 @@
               "APACHE20"
             ],
             "name": "py312-packaging",
-            "version": "26.2"
+            "version": "26.3"
           },
           {
             "licenses": [
               "BSD3CLAUSE"
             ],
             "name": "py312-pandas",
-            "version": "2.3.3_3,1"
+            "version": "2.3.3_4,1"
           },
           {
             "licenses": [
-              "BSD3CLAUSE"
+              "MPL20"
             ],
-            "name": "py312-passlib",
-            "version": "1.7.4_2"
+            "name": "py312-pathspec",
+            "version": "1.1.1"
           },
           {
             "licenses": [
@@ -2536,7 +2480,7 @@
               "MIT-CMU"
             ],
             "name": "py312-pillow",
-            "version": "11.3.0_2"
+            "version": "12.3.0"
           },
           {
             "licenses": [
@@ -2557,21 +2501,21 @@
               "MIT"
             ],
             "name": "py312-platformdirs",
-            "version": "4.10.0"
+            "version": "4.11.6"
           },
           {
             "licenses": [
               "MIT"
             ],
-            "name": "py312-png",
-            "version": "0.0.17_1"
+            "name": "py312-pluggy",
+            "version": "1.6.0"
           },
           {
             "licenses": [
               "MIT"
             ],
             "name": "py312-prek",
-            "version": "0.3.13_2"
+            "version": "0.3.13_3"
           },
           {
             "licenses": [
@@ -2585,7 +2529,7 @@
               "BSD3CLAUSE"
             ],
             "name": "py312-prompt-toolkit",
-            "version": "3.0.52"
+            "version": "3.0.53"
           },
           {
             "licenses": [
@@ -2599,21 +2543,21 @@
               "BSD3CLAUSE"
             ],
             "name": "py312-protobuf",
-            "version": "6.33.6,1"
+            "version": "7.36.1,1"
           },
           {
             "licenses": [
               "LGPL3"
             ],
             "name": "py312-psycopg",
-            "version": "3.3.4"
+            "version": "3.3.5"
           },
           {
             "licenses": [
               "LGPL3"
             ],
             "name": "py312-psycopg-c",
-            "version": "3.3.4"
+            "version": "3.3.5"
           },
           {
             "licenses": [
@@ -2621,13 +2565,6 @@
             ],
             "name": "py312-psycopg-pool",
             "version": "3.3.1"
-          },
-          {
-            "licenses": [
-              "APACHE20"
-            ],
-            "name": "py312-py-ubjson",
-            "version": "0.16.1_1"
           },
           {
             "licenses": [
@@ -2641,14 +2578,14 @@
               "MIT"
             ],
             "name": "py312-pydantic-core",
-            "version": "2.46.4_2"
+            "version": "2.46.5"
           },
           {
             "licenses": [
               "MIT"
             ],
             "name": "py312-pydantic2",
-            "version": "2.13.4"
+            "version": "2.13.5"
           },
           {
             "licenses": [
@@ -2690,7 +2627,7 @@
               "APACHE20"
             ],
             "name": "py312-pyopenssl",
-            "version": "26.3.0,1"
+            "version": "26.4.0,1"
           },
           {
             "licenses": [
@@ -2729,13 +2666,6 @@
           },
           {
             "licenses": [
-              "BSD3CLAUSE"
-            ],
-            "name": "py312-pytrie",
-            "version": "0.4.0_1"
-          },
-          {
-            "licenses": [
               "MIT"
             ],
             "name": "py312-pytz",
@@ -2746,7 +2676,7 @@
               "MIT"
             ],
             "name": "py312-pywavelets",
-            "version": "1.9.0_2"
+            "version": "1.10.0"
           },
           {
             "licenses": [
@@ -2754,13 +2684,6 @@
             ],
             "name": "py312-pyyaml",
             "version": "6.0.3_1"
-          },
-          {
-            "licenses": [
-              "BSD3CLAUSE"
-            ],
-            "name": "py312-qrcode",
-            "version": "8.2_1"
           },
           {
             "licenses": [
@@ -2802,21 +2725,21 @@
               "MIT"
             ],
             "name": "py312-rpds-py",
-            "version": "0.30.0_6"
+            "version": "0.30.0_7"
           },
           {
             "licenses": [
               "MIT"
             ],
             "name": "py312-ruff",
-            "version": "0.16.2"
+            "version": "0.16.6_1"
           },
           {
             "licenses": [
               "APACHE20"
             ],
             "name": "py312-safetensors",
-            "version": "0.8.0_1"
+            "version": "0.8.0_2"
           },
           {
             "licenses": [
@@ -2869,13 +2792,6 @@
           },
           {
             "licenses": [
-              "APACHE20"
-            ],
-            "name": "py312-sortedcontainers",
-            "version": "2.4.0_1"
-          },
-          {
-            "licenses": [
               "MIT"
             ],
             "name": "py312-sqlalchemy20",
@@ -2901,7 +2817,7 @@
               "BSD3CLAUSE"
             ],
             "name": "py312-sqlparse",
-            "version": "0.5.5"
+            "version": "0.6.0"
           },
           {
             "licenses": [
@@ -2929,7 +2845,7 @@
               "MIT"
             ],
             "name": "py312-tiktoken",
-            "version": "0.13.0_2"
+            "version": "0.14.0_1"
           },
           {
             "licenses": [
@@ -2957,7 +2873,7 @@
               "APACHE20"
             ],
             "name": "py312-tokenizers",
-            "version": "0.23.1_3"
+            "version": "0.23.2_1"
           },
           {
             "licenses": [
@@ -2978,7 +2894,7 @@
               "APACHE20"
             ],
             "name": "py312-tornado",
-            "version": "6.5.7"
+            "version": "6.5.8"
           },
           {
             "licenses": [
@@ -2986,7 +2902,14 @@
               "MIT"
             ],
             "name": "py312-tqdm",
-            "version": "4.68.4"
+            "version": "4.70.0"
+          },
+          {
+            "licenses": [
+              "APACHE20"
+            ],
+            "name": "py312-trove-classifiers",
+            "version": "2026.6.1.19"
           },
           {
             "licenses": [
@@ -3006,15 +2929,8 @@
             "licenses": [
               "MIT"
             ],
-            "name": "py312-txaio",
-            "version": "26.6.1"
-          },
-          {
-            "licenses": [
-              "MIT"
-            ],
             "name": "py312-typer",
-            "version": "0.26.8"
+            "version": "0.27.2"
           },
           {
             "licenses": [
@@ -3035,7 +2951,7 @@
               "MIT"
             ],
             "name": "py312-typing-inspection",
-            "version": "0.4.2"
+            "version": "0.4.4"
           },
           {
             "licenses": [
@@ -3048,8 +2964,8 @@
             "licenses": [
               "MIT"
             ],
-            "name": "py312-u-msgpack-python",
-            "version": "2.8.0_1"
+            "name": "py312-tzlocal",
+            "version": "5.4.4"
           },
           {
             "licenses": [
@@ -3064,7 +2980,7 @@
               "TclTk"
             ],
             "name": "py312-ujson",
-            "version": "5.13.0"
+            "version": "6.0.0"
           },
           {
             "licenses": [
@@ -3100,14 +3016,14 @@
               "MIT"
             ],
             "name": "py312-watchfiles",
-            "version": "1.2.0_2"
+            "version": "1.2.0_3"
           },
           {
             "licenses": [
               "MIT"
             ],
             "name": "py312-wcwidth",
-            "version": "0.8.2"
+            "version": "0.8.3"
           },
           {
             "licenses": [
@@ -3121,7 +3037,7 @@
               "BSD2CLAUSE"
             ],
             "name": "py312-wrapt",
-            "version": "2.2.2"
+            "version": "2.4.0"
           },
           {
             "licenses": [
@@ -3142,14 +3058,14 @@
               "APACHE20"
             ],
             "name": "py312-yarl",
-            "version": "1.24.2"
+            "version": "1.24.5"
           },
           {
             "licenses": [
               "MIT"
             ],
             "name": "py312-zensical",
-            "version": "0.0.57"
+            "version": "0.0.60"
           },
           {
             "licenses": [
@@ -3261,7 +3177,7 @@
               "NCSA"
             ],
             "name": "spirv-llvm-translator-llvm19",
-            "version": "19.1.21"
+            "version": "19.1.22"
           },
           {
             "licenses": [
@@ -3331,7 +3247,7 @@
               "GPLv2+"
             ],
             "name": "suitesparse-config",
-            "version": "7.13.0"
+            "version": "7.14.0"
           },
           {
             "licenses": [
@@ -3427,7 +3343,7 @@
               "APACHE20"
             ],
             "name": "uv",
-            "version": "0.12.0"
+            "version": "0.12.10_1"
           },
           {
             "licenses": [
@@ -3636,19 +3552,9 @@
             "version": "2.13.0"
           },
           {
-            "name": "PyNaCl",
-            "purl": "",
-            "version": "1.6.2"
-          },
-          {
-            "name": "PyTrie",
-            "purl": "",
-            "version": "0.4.0"
-          },
-          {
             "name": "PyWavelets",
             "purl": "",
-            "version": "1.9.0"
+            "version": "1.10.0"
           },
           {
             "name": "Pygments",
@@ -3673,7 +3579,7 @@
           {
             "name": "aiohttp",
             "purl": "",
-            "version": "3.14.1"
+            "version": "3.14.3"
           },
           {
             "name": "aiosignal",
@@ -3683,7 +3589,7 @@
           {
             "name": "aiosqlite",
             "purl": "",
-            "version": "0.19.0"
+            "version": "0.22.1"
           },
           {
             "name": "amqp",
@@ -3698,7 +3604,7 @@
           {
             "name": "annotated-types",
             "purl": "",
-            "version": "0.7.0"
+            "version": "0.8.0"
           },
           {
             "name": "anyio",
@@ -3713,17 +3619,7 @@
           {
             "name": "argcomplete",
             "purl": "",
-            "version": "3.7.0"
-          },
-          {
-            "name": "argon2-cffi",
-            "purl": "",
-            "version": "25.1.0"
-          },
-          {
-            "name": "argon2-cffi-bindings",
-            "purl": "",
-            "version": "25.1.0"
+            "version": "3.7.2"
           },
           {
             "name": "asgiref",
@@ -3766,11 +3662,6 @@
             "version": "2.4.5"
           },
           {
-            "name": "base58",
-            "purl": "",
-            "version": "2.1.1"
-          },
-          {
             "name": "bcrypt",
             "purl": "",
             "version": "5.0.0"
@@ -3798,7 +3689,7 @@
           {
             "name": "cbor2",
             "purl": "",
-            "version": "6.1.4"
+            "version": "5.9.0"
           },
           {
             "name": "celery",
@@ -3878,7 +3769,7 @@
           {
             "name": "cryptography",
             "purl": "",
-            "version": "49.0.0"
+            "version": "50.0.1"
           },
           {
             "name": "cycler",
@@ -4016,11 +3907,6 @@
             "version": "0.7.2"
           },
           {
-            "name": "ecdsa",
-            "purl": "",
-            "version": "0.19.2"
-          },
-          {
             "name": "eval-type-backport",
             "purl": "",
             "version": "0.4.0"
@@ -4103,22 +3989,22 @@
           {
             "name": "greenlet",
             "purl": "",
-            "version": "3.5.3"
+            "version": "3.5.5"
           },
           {
             "name": "griffe",
             "purl": "",
-            "version": "2.2.0"
+            "version": "2.3.0"
           },
           {
             "name": "griffecli",
             "purl": "",
-            "version": "2.2.0"
+            "version": "2.3.0"
           },
           {
             "name": "griffelib",
             "purl": "",
-            "version": "2.2.0"
+            "version": "2.3.0"
           },
           {
             "name": "h11",
@@ -4128,7 +4014,12 @@
           {
             "name": "h2",
             "purl": "",
-            "version": "4.3.0"
+            "version": "4.4.1"
+          },
+          {
+            "name": "hatchling",
+            "purl": "",
+            "version": "1.32.0"
           },
           {
             "name": "hf-xet",
@@ -4248,12 +4139,12 @@
           {
             "name": "kiwisolver",
             "purl": "",
-            "version": "1.5.0"
+            "version": "1.5.1"
           },
           {
             "name": "kombu",
             "purl": "",
-            "version": "5.3.7"
+            "version": "5.6.2"
           },
           {
             "name": "langdetect",
@@ -4263,7 +4154,7 @@
           {
             "name": "llama-index-core",
             "purl": "",
-            "version": "0.14.23"
+            "version": "0.14.24"
           },
           {
             "name": "llama-index-embeddings-huggingface",
@@ -4288,7 +4179,7 @@
           {
             "name": "llama-index-instrumentation",
             "purl": "",
-            "version": "0.5.0"
+            "version": "0.6.0"
           },
           {
             "name": "llama-index-llms-ollama",
@@ -4308,12 +4199,12 @@
           {
             "name": "llama-index-workflows",
             "purl": "",
-            "version": "2.22.2"
+            "version": "2.23.3"
           },
           {
             "name": "lxml",
             "purl": "",
-            "version": "6.1.1"
+            "version": "6.1.3"
           },
           {
             "name": "markdown",
@@ -4333,7 +4224,7 @@
           {
             "name": "marshmallow",
             "purl": "",
-            "version": "4.3.0"
+            "version": "4.3.1"
           },
           {
             "name": "matplotlib",
@@ -4353,7 +4244,7 @@
           {
             "name": "msgpack",
             "purl": "",
-            "version": "1.2.1"
+            "version": "1.2.2"
           },
           {
             "name": "multidict",
@@ -4368,7 +4259,7 @@
           {
             "name": "narwhals",
             "purl": "",
-            "version": "2.24.0"
+            "version": "2.25.0"
           },
           {
             "name": "nest-asyncio",
@@ -4436,9 +4327,9 @@
             "version": "2.3.3"
           },
           {
-            "name": "passlib",
+            "name": "pathspec",
             "purl": "",
-            "version": "1.7.4"
+            "version": "1.1.1"
           },
           {
             "name": "pathvalidate",
@@ -4468,12 +4359,12 @@
           {
             "name": "pikepdf",
             "purl": "",
-            "version": "10.12.0"
+            "version": "10.13.0.post1"
           },
           {
             "name": "pillow",
             "purl": "",
-            "version": "11.3.0"
+            "version": "12.3.0"
           },
           {
             "name": "pillow-heif",
@@ -4488,7 +4379,7 @@
           {
             "name": "platformdirs",
             "purl": "",
-            "version": "4.10.0"
+            "version": "4.11.6"
           },
           {
             "name": "pluggy",
@@ -4518,7 +4409,7 @@
           {
             "name": "prompt-toolkit",
             "purl": "",
-            "version": "3.0.52"
+            "version": "3.0.53"
           },
           {
             "name": "prompt_toolkit",
@@ -4533,17 +4424,17 @@
           {
             "name": "protobuf",
             "purl": "",
-            "version": "6.33.6"
+            "version": "7.36.1"
           },
           {
             "name": "psycopg",
             "purl": "",
-            "version": "3.3.4"
+            "version": "3.3.5"
           },
           {
             "name": "psycopg-c",
             "purl": "",
-            "version": "3.3.4"
+            "version": "3.3.5"
           },
           {
             "name": "psycopg-pool",
@@ -4578,12 +4469,12 @@
           {
             "name": "pydantic",
             "purl": "",
-            "version": "2.13.4"
+            "version": "2.13.5"
           },
           {
             "name": "pydantic_core",
             "purl": "",
-            "version": "2.46.4"
+            "version": "2.46.5"
           },
           {
             "name": "pydot",
@@ -4613,17 +4504,12 @@
           {
             "name": "pyopenssl",
             "purl": "",
-            "version": "26.3.0"
+            "version": "26.4.0"
           },
           {
             "name": "pyparsing",
             "purl": "",
             "version": "3.3.2"
-          },
-          {
-            "name": "pypng",
-            "purl": "",
-            "version": "0.0.17"
           },
           {
             "name": "pyserial",
@@ -4758,7 +4644,7 @@
           {
             "name": "ruff",
             "purl": "",
-            "version": "0.16.2"
+            "version": "0.16.6"
           },
           {
             "name": "safetensors",
@@ -4816,11 +4702,6 @@
             "version": "1.0.0"
           },
           {
-            "name": "sortedcontainers",
-            "purl": "",
-            "version": "2.4.0"
-          },
-          {
             "name": "sqlalchemy",
             "purl": "",
             "version": "2.0.52"
@@ -4838,7 +4719,7 @@
           {
             "name": "sqlparse",
             "purl": "",
-            "version": "0.5.5"
+            "version": "0.6.0"
           },
           {
             "name": "sympy",
@@ -4873,7 +4754,7 @@
           {
             "name": "tiktoken",
             "purl": "",
-            "version": "0.13.0"
+            "version": "0.14.0"
           },
           {
             "name": "time-machine",
@@ -4893,7 +4774,7 @@
           {
             "name": "tokenizers",
             "purl": "",
-            "version": "0.23.1"
+            "version": "0.23.2"
           },
           {
             "name": "tomli",
@@ -4913,7 +4794,7 @@
           {
             "name": "tornado",
             "purl": "",
-            "version": "6.5.7"
+            "version": "6.5.8"
           },
           {
             "name": "tqdm",
@@ -4926,6 +4807,11 @@
             "version": "5.13.1"
           },
           {
+            "name": "trove-classifiers",
+            "purl": "",
+            "version": "2026.6.1.19"
+          },
+          {
             "name": "truststore",
             "purl": "",
             "version": "0.10.4"
@@ -4933,7 +4819,7 @@
           {
             "name": "txaio",
             "purl": "",
-            "version": "26.6.1"
+            "version": "25.12.2"
           },
           {
             "name": "typer",
@@ -4948,7 +4834,7 @@
           {
             "name": "typing-inspection",
             "purl": "",
-            "version": "0.4.2"
+            "version": "0.4.4"
           },
           {
             "name": "typing_extensions",
@@ -4966,11 +4852,6 @@
             "version": "5.3.1"
           },
           {
-            "name": "u-msgpack-python",
-            "purl": "",
-            "version": "2.8.0"
-          },
-          {
             "name": "uharfbuzz",
             "purl": "",
             "version": "0.55.0"
@@ -4978,7 +4859,7 @@
           {
             "name": "ujson",
             "purl": "",
-            "version": "5.13.0"
+            "version": "6.0.0"
           },
           {
             "name": "unicodedata2",
@@ -5033,7 +4914,7 @@
           {
             "name": "wrapt",
             "purl": "",
-            "version": "2.2.2"
+            "version": "2.4.0"
           },
           {
             "name": "wsproto",
@@ -5048,7 +4929,7 @@
           {
             "name": "yarl",
             "purl": "",
-            "version": "1.24.2"
+            "version": "1.24.5"
           },
           {
             "name": "yq",
@@ -5058,7 +4939,7 @@
           {
             "name": "zensical",
             "purl": "",
-            "version": "0.0.57"
+            "version": "0.0.60"
           },
           {
             "name": "zope.interface",
@@ -5138,15 +5019,15 @@
       "source": "upstream",
       "summary": {
         "dotnet": 0,
-        "freebsd": 494,
+        "freebsd": 482,
         "go": 0,
         "java": 0,
         "node": 12,
         "php": 0,
-        "python": 297,
+        "python": 290,
         "ruby": 0,
         "rust": 10,
-        "total": 813
+        "total": 794
       }
     }
   }

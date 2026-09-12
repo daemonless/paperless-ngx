@@ -7,6 +7,7 @@ Source: dbuild templates
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/daemonless/paperless-ngx/build.yaml?style=flat-square&label=Build&color=green)](https://github.com/daemonless/paperless-ngx/actions)
 [![Last Commit](https://img.shields.io/github/last-commit/daemonless/paperless-ngx?style=flat-square&label=Last+Commit&color=blue)](https://github.com/daemonless/paperless-ngx/commits)
+[![OCI Pulls](https://img.shields.io/docker/pulls/daemonless/paperless-ngx?style=flat-square&label=OCI+Pulls&color=blue)](https://hub.docker.com/r/daemonless/paperless-ngx)
 
 A community-supported open-source document management system that transforms your physical documents into a searchable online archive so you can keep, well, less paper.
 
@@ -37,9 +38,13 @@ services:
     environment:
       - PUID=1000  # User ID for the application process
       - PGID=1000  # Group ID for the application process
-      - TZ=UTC  # Timezone for the container
-      - PAPERLESS_ADMIN_USER=admin  # Set name of the admin user on first start
-      - PAPERLESS_ADMIN_PASSWORD=<PAPERLESS_ADMIN_PASSWORD>  # Set password of the admin user on first start
+      - TZ=${TZ:-UTC}  # Timezone for the container
+      - PAPERLESS_REDIS=redis://localhost:6379
+      - PAPERLESS_ADMIN_USER=${PAPERLESS_ADMIN_USER}  # Set name of the admin user on first start
+      - PAPERLESS_ADMIN_PASSWORD=${PAPERLESS_ADMIN_PASSWORD}  # Set password of the admin user on first start
+      - CONFIG_LOCATION=  # Path to store configuration, database and (by default) documents
+      - DOCUMENTS_LOCATION=  # Optional separate document store (originals, archive, thumbnails), e.g. its own ZFS filesystem
+      - REDIS_DATA_LOCATION=  # Path to store the redis data
     volumes:
       - "/path/to/containers/paperless-ngx:/config"
     ports:
@@ -60,9 +65,13 @@ Save as `compose.yaml`, then run `podman-compose up -d`.
 DIRECTOR_PROJECT=paperless-ngx
 PUID=1000
 PGID=1000
-TZ=UTC
-PAPERLESS_ADMIN_USER=admin
-PAPERLESS_ADMIN_PASSWORD=<PAPERLESS_ADMIN_PASSWORD>
+TZ=${TZ:-UTC}
+PAPERLESS_REDIS=redis://localhost:6379
+PAPERLESS_ADMIN_USER=${PAPERLESS_ADMIN_USER}
+PAPERLESS_ADMIN_PASSWORD=${PAPERLESS_ADMIN_PASSWORD}
+CONFIG_LOCATION=
+DOCUMENTS_LOCATION=
+REDIS_DATA_LOCATION=
 ```
 
 **appjail-director.yml**:
@@ -71,8 +80,8 @@ PAPERLESS_ADMIN_PASSWORD=<PAPERLESS_ADMIN_PASSWORD>
 # appjail-director.yml
 
 options:
-  - virtualnet: ':<random> default'
-  - nat:
+  - alias:
+  - ip4_inherit:
 services:
   paperless-ngx:
     name: paperless_ngx
@@ -86,13 +95,26 @@ services:
         - PUID: !ENV '${PUID}'
         - PGID: !ENV '${PGID}'
         - TZ: !ENV '${TZ}'
+        - PAPERLESS_REDIS: !ENV '${PAPERLESS_REDIS}'
         - PAPERLESS_ADMIN_USER: !ENV '${PAPERLESS_ADMIN_USER}'
         - PAPERLESS_ADMIN_PASSWORD: !ENV '${PAPERLESS_ADMIN_PASSWORD}'
+        - CONFIG_LOCATION: !ENV '${CONFIG_LOCATION}'
+        - DOCUMENTS_LOCATION: !ENV '${DOCUMENTS_LOCATION}'
+        - REDIS_DATA_LOCATION: !ENV '${REDIS_DATA_LOCATION}'
     volumes:
       - paperless-ngx: /config
+  paperless-redis:
+    name: paperless_redis
+    options:
+      - from: ghcr.io/daemonless/redis:latest
+      - template: !ENV '${PWD}/template.conf'
+    volumes:
+      - redis_data: /config
 volumes:
   paperless-ngx:
     device: '/path/to/containers/paperless-ngx'
+  redis_data:
+    device: !ENV '${REDIS_DATA_LOCATION}'
 ```
 
 **Makejail**:
@@ -123,9 +145,13 @@ podman run -d --name paperless-ngx \
   -p 5555:5555 \
   -e PUID=1000 \
   -e PGID=1000 \
-  -e TZ=UTC \
-  -e PAPERLESS_ADMIN_USER=admin \
-  -e PAPERLESS_ADMIN_PASSWORD=<PAPERLESS_ADMIN_PASSWORD> \
+  -e TZ=${TZ:-UTC} \
+  -e PAPERLESS_REDIS=redis://localhost:6379 \
+  -e PAPERLESS_ADMIN_USER=${PAPERLESS_ADMIN_USER} \
+  -e PAPERLESS_ADMIN_PASSWORD=${PAPERLESS_ADMIN_PASSWORD} \
+  -e CONFIG_LOCATION= \
+  -e DOCUMENTS_LOCATION= \
+  -e REDIS_DATA_LOCATION= \
   -v /path/to/containers/paperless-ngx:/config \
   ghcr.io/daemonless/paperless-ngx:latest
 ```
@@ -145,9 +171,13 @@ appjail oci run -Pd \
   -o expose="5555:5555 proto:tcp" \
   -e PUID=1000 \
   -e PGID=1000 \
-  -e TZ=UTC \
-  -e PAPERLESS_ADMIN_USER=admin \
-  -e PAPERLESS_ADMIN_PASSWORD=<PAPERLESS_ADMIN_PASSWORD> \
+  -e TZ=${TZ:-UTC} \
+  -e PAPERLESS_REDIS=redis://localhost:6379 \
+  -e PAPERLESS_ADMIN_USER=${PAPERLESS_ADMIN_USER} \
+  -e PAPERLESS_ADMIN_PASSWORD=${PAPERLESS_ADMIN_PASSWORD} \
+  -e CONFIG_LOCATION= \
+  -e DOCUMENTS_LOCATION= \
+  -e REDIS_DATA_LOCATION= \
   -o fstab="/path/to/containers/paperless-ngx /config <pseudofs>" \
   ghcr.io/daemonless/paperless-ngx:latest paperless-ngx
 ```
@@ -175,9 +205,13 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=UTC
-      - PAPERLESS_ADMIN_USER=admin
-      - PAPERLESS_ADMIN_PASSWORD=<PAPERLESS_ADMIN_PASSWORD>
+      - TZ=${TZ:-UTC}
+      - PAPERLESS_REDIS=redis://localhost:6379
+      - PAPERLESS_ADMIN_USER=${PAPERLESS_ADMIN_USER}
+      - PAPERLESS_ADMIN_PASSWORD=${PAPERLESS_ADMIN_PASSWORD}
+      - CONFIG_LOCATION=
+      - DOCUMENTS_LOCATION=
+      - REDIS_DATA_LOCATION=
     volumes:
       - "/path/to/containers/paperless-ngx:/config"
 ```
@@ -188,9 +222,13 @@ Save as `bastille-compose.yml`, then run `bastille up`. Or via CLI:
 bastille create -O \
   --env PUID=1000 \
   --env PGID=1000 \
-  --env TZ=UTC \
-  --env PAPERLESS_ADMIN_USER=admin \
-  --env PAPERLESS_ADMIN_PASSWORD=<PAPERLESS_ADMIN_PASSWORD> \
+  --env TZ=${TZ:-UTC} \
+  --env PAPERLESS_REDIS=redis://localhost:6379 \
+  --env PAPERLESS_ADMIN_USER=${PAPERLESS_ADMIN_USER} \
+  --env PAPERLESS_ADMIN_PASSWORD=${PAPERLESS_ADMIN_PASSWORD} \
+  --env CONFIG_LOCATION= \
+  --env DOCUMENTS_LOCATION= \
+  --env REDIS_DATA_LOCATION= \
   --volume /path/to/containers/paperless-ngx /config \
   paperless-ngx ghcr.io/daemonless/paperless-ngx:latest inherit
 ```
@@ -207,9 +245,13 @@ bastille create -O \
     env:
       PUID: "1000"
       PGID: "1000"
-      TZ: "UTC"
-      PAPERLESS_ADMIN_USER: "admin"
-      PAPERLESS_ADMIN_PASSWORD: "<PAPERLESS_ADMIN_PASSWORD>"
+      TZ: "${TZ:-UTC}"
+      PAPERLESS_REDIS: "redis://localhost:6379"
+      PAPERLESS_ADMIN_USER: "${PAPERLESS_ADMIN_USER}"
+      PAPERLESS_ADMIN_PASSWORD: "${PAPERLESS_ADMIN_PASSWORD}"
+      CONFIG_LOCATION: ""
+      DOCUMENTS_LOCATION: ""
+      REDIS_DATA_LOCATION: ""
     ports:
       - "8000:8000"
       - "5555:5555"
@@ -229,9 +271,13 @@ Access at: `http://localhost:8000`
 |----------|---------|-------------|
 | `PUID` | `1000` | User ID for the application process |
 | `PGID` | `1000` | Group ID for the application process |
-| `TZ` | `UTC` | Timezone for the container |
-| `PAPERLESS_ADMIN_USER` | `admin` | Set name of the admin user on first start |
-| `PAPERLESS_ADMIN_PASSWORD` | `<PAPERLESS_ADMIN_PASSWORD>` | Set password of the admin user on first start |
+| `TZ` | `${TZ:-UTC}` | Timezone for the container |
+| `PAPERLESS_REDIS` | `redis://localhost:6379` |  |
+| `PAPERLESS_ADMIN_USER` | `${PAPERLESS_ADMIN_USER}` | Set name of the admin user on first start |
+| `PAPERLESS_ADMIN_PASSWORD` | `${PAPERLESS_ADMIN_PASSWORD}` | Set password of the admin user on first start |
+| `CONFIG_LOCATION` | `` | Path to store configuration, database and (by default) documents |
+| `DOCUMENTS_LOCATION` | `` | Optional separate document store (originals, archive, thumbnails), e.g. its own ZFS filesystem |
+| `REDIS_DATA_LOCATION` | `` | Path to store the redis data |
 
 ### Volumes
 
@@ -250,7 +296,7 @@ Access at: `http://localhost:8000`
 ### Pre-Requisites
 Upgrading to Paperless-ngx v3 can only be performed from version 2.20.15. If you are running an older version, please upgrade to v2.20.15 before proceeding with the v3 upgrade.
 ### Breaking Changes
-Paperless-ngx v3 introduced some changes to the configuration.  
+Paperless-ngx v3 introduced some changes to the configuration.
 Read the official [v3 Migration Guide](https://docs.paperless-ngx.com/migration-v3/) to make sure you adapt your configuration so that it works with v3.
 ### Database migration
 The DB migration will run automatically when the container starts.
