@@ -242,6 +242,7 @@ pkg update && pkg install -y uv git zip yq \
   py312-django52 \
   py312-django-compression-middleware \
   py312-pdftotext \
+  py312-cloudpickle \
   tesseract \
   ghostscript10 \
   ImageMagick7-nox11 \
