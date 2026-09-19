@@ -1,11 +1,11 @@
 {
-  "generated": "2026-09-19T09:04:39Z",
+  "generated": "2026-09-19T22:43:25Z",
   "image": "paperless-ngx",
   "tags": {
     "latest": {
       "app_version": "3.2.0",
       "arch": "amd64",
-      "generated": "2026-09-19T08:58:52Z",
+      "generated": "2026-09-19T22:37:25Z",
       "packages": {
         "dotnet": [],
         "freebsd": [
@@ -1991,6 +1991,13 @@
             "licenses": [
               "BSD3CLAUSE"
             ],
+            "name": "py312-cloudpickle",
+            "version": "3.1.2_1"
+          },
+          {
+            "licenses": [
+              "BSD3CLAUSE"
+            ],
             "name": "py312-colorama",
             "version": "0.4.6"
           },
@@ -2718,7 +2725,7 @@
               "PSFL"
             ],
             "name": "py312-regex",
-            "version": "2026.7.19"
+            "version": "2026.9.10"
           },
           {
             "licenses": [
@@ -3261,7 +3268,7 @@
               "GPLv2+"
             ],
             "name": "suitesparse-config",
-            "version": "7.14.0"
+            "version": "7.14.1"
           },
           {
             "licenses": [
@@ -3754,6 +3761,11 @@
             "name": "click-repl",
             "purl": "",
             "version": "0.3.0"
+          },
+          {
+            "name": "cloudpickle",
+            "purl": "",
+            "version": "3.1.2"
           },
           {
             "name": "colorama",
@@ -4638,7 +4650,7 @@
           {
             "name": "regex",
             "purl": "",
-            "version": "2026.7.19"
+            "version": "2026.9.10"
           },
           {
             "name": "requests",
@@ -5038,15 +5050,15 @@
       "source": "upstream",
       "summary": {
         "dotnet": 0,
-        "freebsd": 484,
+        "freebsd": 485,
         "go": 0,
         "java": 0,
         "node": 12,
         "php": 0,
-        "python": 291,
+        "python": 292,
         "ruby": 0,
         "rust": 10,
-        "total": 797
+        "total": 799
       }
     }
   }
