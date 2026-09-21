@@ -1,11 +1,11 @@
 {
-  "generated": "2026-09-19T22:43:25Z",
+  "generated": "2026-09-21T12:16:44Z",
   "image": "paperless-ngx",
   "tags": {
     "latest": {
-      "app_version": "3.2.0",
+      "app_version": "3.2.1",
       "arch": "amd64",
-      "generated": "2026-09-19T22:37:25Z",
+      "generated": "2026-09-21T12:11:51Z",
       "packages": {
         "dotnet": [],
         "freebsd": [
@@ -3630,7 +3630,7 @@
           {
             "name": "anyio",
             "purl": "",
-            "version": "4.12.1"
+            "version": "4.14.2"
           },
           {
             "name": "appdirs",
