@@ -354,7 +354,6 @@ LABEL org.opencontainers.image.title="Paperless-ngx" \
       io.daemonless.category="Utilities" \
       io.daemonless.port="8000" \
       io.daemonless.arch="${FREEBSD_ARCH}" \
-      io.daemonless.packages="${PACKAGES}" \
       io.daemonless.upstream-url="${UPSTREAM_URL}" \
       io.daemonless.upstream-jq="${UPSTREAM_JQ}"
       
