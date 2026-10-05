@@ -23,6 +23,13 @@ A community-supported open-source document management system that transforms you
 | :--- | :--- | :--- |
 | `latest` | Built from latest upstream release and latest FreeBSD packages. | Most users — recommended. |
 
+## Parts
+
+| Service | Image | Role | |
+|---|---|---|---|
+| **paperlessngx** | `ghcr.io/daemonless/paperless-ngx:latest` |  | [docs](https://github.com/daemonless/paperless-ngx) |
+| **redis** | `ghcr.io/daemonless/redis:latest` |  | [docs](https://github.com/daemonless/redis) |
+
 ## Prerequisites
 Before deploying, ensure your host environment is ready. See the [Quick Start Guide](https://daemonless.io/guides/quick-start) for host setup instructions.
 
@@ -30,31 +37,71 @@ Before deploying, ensure your host environment is ready. See the [Quick Start Gu
 
 ### Podman Compose
 
-```yaml
-services:
-  paperless-ngx:
-    image: "ghcr.io/daemonless/paperless-ngx:latest"
-    container_name: paperless-ngx
-    environment:
-      - PUID=1000  # User ID for the application process
-      - PGID=1000  # Group ID for the application process
-      - TZ=${TZ:-UTC}  # Timezone for the container
-      - PAPERLESS_REDIS=redis://localhost:6379
-      - PAPERLESS_ADMIN_USER=${PAPERLESS_ADMIN_USER}  # Set name of the admin user on first start
-      - PAPERLESS_ADMIN_PASSWORD=${PAPERLESS_ADMIN_PASSWORD}  # Set password of the admin user on first start
-      - CONFIG_LOCATION=  # Path to store configuration, database and (by default) documents
-      - DOCUMENTS_LOCATION=  # Optional separate document store (originals, archive, thumbnails), e.g. its own ZFS filesystem
-      - REDIS_DATA_LOCATION=  # Path to store the redis data
-    volumes:
-      - "/path/to/containers/paperless-ngx:/config"
-    ports:
-      - "8000:8000"
-      - "5555:5555"
-    # always (not unless-stopped) so FreeBSD's podman rc.d auto-starts it at boot
-    restart: always
+**1.** Save as `.env` and fill in what is empty:
+
+```env { data-zip-bundle="paperless-ngx-podman" data-zip-filename=".env" }
+# Paperless-ngx for FreeBSD (Daemonless)
+# Copy to .env and edit. Any PAPERLESS_* setting from
+# https://docs.paperless-ngx.com/configuration/ can be added here.
+
+# Where data lives on the host
+CONFIG_LOCATION=/containers/paperless-ngx/config
+REDIS_DATA_LOCATION=/containers/paperless-ngx/redis
+
+# Optional: keep the document store (originals, archive, thumbnails) elsewhere,
+# e.g. on its own ZFS filesystem. Leave unset to keep it under CONFIG_LOCATION.
+# DOCUMENTS_LOCATION=/containers/paperless-ngx/documents
+
+# Admin user created on first start (remove after setup)
+PAPERLESS_ADMIN_USER=admin
+PAPERLESS_ADMIN_PASSWORD=
+
+# Timezone (TZ identifier)
+# TZ=UTC
 ```
 
-Save as `compose.yaml`, then run `podman-compose up -d`.
+**2.** Save as `compose.yaml`:
+
+```yaml { data-zip-bundle="paperless-ngx-podman" data-zip-filename="compose.yaml" }
+name: paperless-ngx
+
+services:
+  paperlessngx:
+    image: ghcr.io/daemonless/paperless-ngx:latest
+    restart: unless-stopped
+    network_mode: host
+
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ:-UTC}
+      - PAPERLESS_REDIS=redis://localhost:6379
+      - PAPERLESS_ADMIN_USER=${PAPERLESS_ADMIN_USER}
+      - PAPERLESS_ADMIN_PASSWORD=${PAPERLESS_ADMIN_PASSWORD}
+
+    env_file:
+      - .env
+
+    depends_on:
+      - redis
+
+    volumes:
+      - ${CONFIG_LOCATION}:/config
+
+    ports:
+      - 8000:8000
+      - 5555:5555
+
+  redis:
+    image: ghcr.io/daemonless/redis:latest
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${REDIS_DATA_LOCATION}:/config
+```
+
+Then run `podman-compose up -d`.
 
 ### AppJail Director
 **.env**:
@@ -65,13 +112,13 @@ Save as `compose.yaml`, then run `podman-compose up -d`.
 DIRECTOR_PROJECT=paperless-ngx
 PUID=1000
 PGID=1000
-TZ=${TZ:-UTC}
+TZ=UTC
 PAPERLESS_REDIS=redis://localhost:6379
-PAPERLESS_ADMIN_USER=${PAPERLESS_ADMIN_USER}
-PAPERLESS_ADMIN_PASSWORD=${PAPERLESS_ADMIN_PASSWORD}
-CONFIG_LOCATION=
+PAPERLESS_ADMIN_USER=admin
+PAPERLESS_ADMIN_PASSWORD=<PAPERLESS_ADMIN_PASSWORD>
+CONFIG_LOCATION=/containers/paperless-ngx/config
 DOCUMENTS_LOCATION=
-REDIS_DATA_LOCATION=
+REDIS_DATA_LOCATION=/containers/paperless-ngx/redis
 ```
 
 **appjail-director.yml**:
@@ -112,7 +159,7 @@ services:
       - redis_data: /config
 volumes:
   paperless-ngx:
-    device: '/path/to/containers/paperless-ngx'
+    device: '/containers/paperless-ngx'
   redis_data:
     device: !ENV '${REDIS_DATA_LOCATION}'
 ```
@@ -137,130 +184,6 @@ Save the files above, then run `appjail-director up`.
 >
 > To avoid exposing ports, just remove the `expose` option in your `appjail-director.yml` or from your command-line arguments.
 
-### Podman CLI
-
-```bash
-podman run -d --name paperless-ngx \
-  -p 8000:8000 \
-  -p 5555:5555 \
-  -e PUID=1000 \
-  -e PGID=1000 \
-  -e TZ=${TZ:-UTC} \
-  -e PAPERLESS_REDIS=redis://localhost:6379 \
-  -e PAPERLESS_ADMIN_USER=${PAPERLESS_ADMIN_USER} \
-  -e PAPERLESS_ADMIN_PASSWORD=${PAPERLESS_ADMIN_PASSWORD} \
-  -e CONFIG_LOCATION= \
-  -e DOCUMENTS_LOCATION= \
-  -e REDIS_DATA_LOCATION= \
-  -v /path/to/containers/paperless-ngx:/config \
-  ghcr.io/daemonless/paperless-ngx:latest
-```
-
-Save as `run.sh`, then run `sh run.sh`.
-
-### AppJail
-
-
-```bash
-appjail oci run -Pd \
-  -o overwrite=force \
-  -o container="args:--pull" \
-  -o virtualnet=":<random> default" \
-  -o nat \
-  -o expose="8000:8000 proto:tcp" \
-  -o expose="5555:5555 proto:tcp" \
-  -e PUID=1000 \
-  -e PGID=1000 \
-  -e TZ=${TZ:-UTC} \
-  -e PAPERLESS_REDIS=redis://localhost:6379 \
-  -e PAPERLESS_ADMIN_USER=${PAPERLESS_ADMIN_USER} \
-  -e PAPERLESS_ADMIN_PASSWORD=${PAPERLESS_ADMIN_PASSWORD} \
-  -e CONFIG_LOCATION= \
-  -e DOCUMENTS_LOCATION= \
-  -e REDIS_DATA_LOCATION= \
-  -o fstab="/path/to/containers/paperless-ngx /config <pseudofs>" \
-  ghcr.io/daemonless/paperless-ngx:latest paperless-ngx
-```
-
-Save the files above, then run `sh run.sh`.
-
-
-> [!WARNING]
-> Exposing ports in AppJail means that your service can be reached from remote hosts. If that is not your intention, do not expose the ports and communicate with the service using the jail's IPv4 address or hostname assigned by the virtual network.
->
-> To avoid exposing ports, just remove the `expose` option in your `appjail-director.yml` or from your command-line arguments.
-
-### Bastille
-
-> [!WARNING]
-> Bastille's OCI support is **experimental**. It requires `buildah` and shares the host network stack (`inherit`). Mount volumes with `--volume HOST JAIL`; without it, image-declared volumes are stored under `${bastille_volumesdir}/${jail}`.
-
-```yaml
-services:
-  paperless-ngx:
-    name: paperless-ngx
-    image: "ghcr.io/daemonless/paperless-ngx:latest"
-    network:
-      - mode: host
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=${TZ:-UTC}
-      - PAPERLESS_REDIS=redis://localhost:6379
-      - PAPERLESS_ADMIN_USER=${PAPERLESS_ADMIN_USER}
-      - PAPERLESS_ADMIN_PASSWORD=${PAPERLESS_ADMIN_PASSWORD}
-      - CONFIG_LOCATION=
-      - DOCUMENTS_LOCATION=
-      - REDIS_DATA_LOCATION=
-    volumes:
-      - "/path/to/containers/paperless-ngx:/config"
-```
-
-Save as `bastille-compose.yml`, then run `bastille up`. Or via CLI:
-
-```bash
-bastille create -O \
-  --env PUID=1000 \
-  --env PGID=1000 \
-  --env TZ=${TZ:-UTC} \
-  --env PAPERLESS_REDIS=redis://localhost:6379 \
-  --env PAPERLESS_ADMIN_USER=${PAPERLESS_ADMIN_USER} \
-  --env PAPERLESS_ADMIN_PASSWORD=${PAPERLESS_ADMIN_PASSWORD} \
-  --env CONFIG_LOCATION= \
-  --env DOCUMENTS_LOCATION= \
-  --env REDIS_DATA_LOCATION= \
-  --volume /path/to/containers/paperless-ngx /config \
-  paperless-ngx ghcr.io/daemonless/paperless-ngx:latest inherit
-```
-
-### Ansible
-
-```yaml
-- name: Deploy paperless-ngx
-  containers.podman.podman_container:
-    name: paperless-ngx
-    image: "ghcr.io/daemonless/paperless-ngx:latest"
-    state: started
-    restart_policy: always
-    env:
-      PUID: "1000"
-      PGID: "1000"
-      TZ: "${TZ:-UTC}"
-      PAPERLESS_REDIS: "redis://localhost:6379"
-      PAPERLESS_ADMIN_USER: "${PAPERLESS_ADMIN_USER}"
-      PAPERLESS_ADMIN_PASSWORD: "${PAPERLESS_ADMIN_PASSWORD}"
-      CONFIG_LOCATION: ""
-      DOCUMENTS_LOCATION: ""
-      REDIS_DATA_LOCATION: ""
-    ports:
-      - "8000:8000"
-      - "5555:5555"
-    volumes:
-      - "/path/to/containers/paperless-ngx:/config"
-```
-
-Save as `paperless-ngx-deploy.yaml`, then run `ansible-playbook paperless-ngx-deploy.yaml`.
-
 Access at: `http://localhost:8000`
 
 ## Parameters
@@ -271,13 +194,13 @@ Access at: `http://localhost:8000`
 |----------|---------|-------------|
 | `PUID` | `1000` | User ID for the application process |
 | `PGID` | `1000` | Group ID for the application process |
-| `TZ` | `${TZ:-UTC}` | Timezone for the container |
+| `TZ` | `UTC` | Timezone for the container |
 | `PAPERLESS_REDIS` | `redis://localhost:6379` |  |
-| `PAPERLESS_ADMIN_USER` | `${PAPERLESS_ADMIN_USER}` | Set name of the admin user on first start |
-| `PAPERLESS_ADMIN_PASSWORD` | `${PAPERLESS_ADMIN_PASSWORD}` | Set password of the admin user on first start |
-| `CONFIG_LOCATION` | `` | Path to store configuration, database and (by default) documents |
+| `PAPERLESS_ADMIN_USER` | `admin` | Set name of the admin user on first start |
+| `PAPERLESS_ADMIN_PASSWORD` | `<PAPERLESS_ADMIN_PASSWORD>` | Set password of the admin user on first start |
+| `CONFIG_LOCATION` | `/containers/paperless-ngx/config` | Path to store configuration, database and (by default) documents |
 | `DOCUMENTS_LOCATION` | `` | Optional separate document store (originals, archive, thumbnails), e.g. its own ZFS filesystem |
-| `REDIS_DATA_LOCATION` | `` | Path to store the redis data |
+| `REDIS_DATA_LOCATION` | `/containers/paperless-ngx/redis` | Path to store the redis data |
 
 ### Volumes
 

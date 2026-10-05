@@ -1,11 +1,11 @@
 {
-  "generated": "2026-09-21T12:16:44Z",
+  "generated": "2026-10-05T01:51:26Z",
   "image": "paperless-ngx",
   "tags": {
     "latest": {
       "app_version": "3.2.1",
       "arch": "amd64",
-      "generated": "2026-09-21T12:11:51Z",
+      "generated": "2026-10-05T01:48:09Z",
       "packages": {
         "dotnet": [],
         "freebsd": [
@@ -42,14 +42,14 @@
               "BSD2CLAUSE"
             ],
             "name": "FreeBSD-clibs",
-            "version": "15.1p2"
+            "version": "15.1p4"
           },
           {
             "licenses": [
               "BSD2CLAUSE"
             ],
             "name": "FreeBSD-clibs-lib32",
-            "version": "15.1p2"
+            "version": "15.1p4"
           },
           {
             "licenses": [
@@ -70,7 +70,7 @@
               "BSD-3-Clause"
             ],
             "name": "FreeBSD-dhclient",
-            "version": "15.1"
+            "version": "15.1p4"
           },
           {
             "licenses": [
@@ -105,7 +105,7 @@
               "BSD2CLAUSE"
             ],
             "name": "FreeBSD-libcasper",
-            "version": "15.1"
+            "version": "15.1p4"
           },
           {
             "licenses": [
@@ -168,7 +168,7 @@
               "BSD2CLAUSE"
             ],
             "name": "FreeBSD-openssl-lib",
-            "version": "15.1p3"
+            "version": "15.1p4"
           },
           {
             "licenses": [
@@ -210,7 +210,7 @@
               "BSD2CLAUSE"
             ],
             "name": "FreeBSD-runtime",
-            "version": "15.1p3"
+            "version": "15.1p4"
           },
           {
             "licenses": [
@@ -231,7 +231,7 @@
               "BSD2CLAUSE"
             ],
             "name": "FreeBSD-utilities",
-            "version": "15.1p2"
+            "version": "15.1p4"
           },
           {
             "licenses": [
@@ -259,7 +259,7 @@
               "PD"
             ],
             "name": "FreeBSD-zoneinfo",
-            "version": "15.1p2"
+            "version": "15.1p4"
           },
           {
             "licenses": [
@@ -280,7 +280,7 @@
               "BSD3CLAUSE"
             ],
             "name": "Imath",
-            "version": "3.2.3"
+            "version": "3.2.3_1"
           },
           {
             "licenses": [
@@ -294,7 +294,7 @@
               "BSD2CLAUSE"
             ],
             "name": "aom",
-            "version": "3.15.0"
+            "version": "3.15.1"
           },
           {
             "licenses": [
@@ -323,7 +323,7 @@
               "BSL"
             ],
             "name": "boost-libs",
-            "version": "1.91.0"
+            "version": "1.92.0"
           },
           {
             "licenses": [
@@ -381,7 +381,7 @@
               "GPLv2+"
             ],
             "name": "dbus-glib",
-            "version": "0.114"
+            "version": "0.116"
           },
           {
             "licenses": [
@@ -403,7 +403,7 @@
               "LGPL3+"
             ],
             "name": "ffmpeg",
-            "version": "9.0.1,1"
+            "version": "9.0.2,1"
           },
           {
             "licenses": [
@@ -441,7 +441,7 @@
               "LGPL21"
             ],
             "name": "fribidi",
-            "version": "1.0.16"
+            "version": "1.0.17"
           },
           {
             "licenses": [
@@ -506,7 +506,7 @@
               "GPLv2"
             ],
             "name": "git",
-            "version": "2.55.0"
+            "version": "2.56.0"
           },
           {
             "licenses": [
@@ -716,7 +716,7 @@
               "MIT"
             ],
             "name": "level-zero",
-            "version": "1.33.1"
+            "version": "1.34.0"
           },
           {
             "licenses": [
@@ -1015,13 +1015,6 @@
           },
           {
             "licenses": [
-              "GPLv2"
-            ],
-            "name": "libgit2",
-            "version": "1.9.7"
-          },
-          {
-            "licenses": [
               "MIT",
               "APACHE20"
             ],
@@ -1041,7 +1034,7 @@
               "LGPL3+"
             ],
             "name": "libheif",
-            "version": "1.22.2_2"
+            "version": "1.22.2_3"
           },
           {
             "licenses": [
@@ -1084,7 +1077,7 @@
               "BSD3CLAUSE"
             ],
             "name": "libkml",
-            "version": "1.3.0_31"
+            "version": "1.3.0_32"
           },
           {
             "licenses": [
@@ -1107,7 +1100,7 @@
               "LGPL21"
             ],
             "name": "libltdl",
-            "version": "2.5.4"
+            "version": "2.6.2"
           },
           {
             "licenses": [
@@ -1288,7 +1281,7 @@
               "GPLv2+"
             ],
             "name": "libwmf-nox11",
-            "version": "0.2.15"
+            "version": "0.2.16"
           },
           {
             "licenses": [
@@ -1491,7 +1484,7 @@
               "MPL20"
             ],
             "name": "nss",
-            "version": "3.129"
+            "version": "3.130"
           },
           {
             "licenses": [
@@ -1519,7 +1512,7 @@
               "BSD3CLAUSE"
             ],
             "name": "openexr",
-            "version": "3.4.15_1"
+            "version": "3.4.15_2"
           },
           {
             "licenses": [
@@ -1540,14 +1533,14 @@
               "BSD2CLAUSE"
             ],
             "name": "openjph",
-            "version": "0.31.0"
+            "version": "0.32.0"
           },
           {
             "licenses": [
               "BSD3CLAUSE"
             ],
             "name": "openmpi",
-            "version": "5.0.10_2"
+            "version": "5.0.11"
           },
           {
             "licenses": [
@@ -1561,7 +1554,7 @@
               "BSD3CLAUSE"
             ],
             "name": "p11-kit",
-            "version": "0.26.5"
+            "version": "0.26.5_1"
           },
           {
             "licenses": [
@@ -1569,7 +1562,7 @@
               "GPLv1+"
             ],
             "name": "p5-Authen-SASL",
-            "version": "2.1900"
+            "version": "2.2100"
           },
           {
             "licenses": [
@@ -1577,7 +1570,7 @@
               "GPLv1+"
             ],
             "name": "p5-Crypt-URandom",
-            "version": "0.54"
+            "version": "0.55"
           },
           {
             "licenses": [
@@ -1653,7 +1646,7 @@
               "BSD3CLAUSE"
             ],
             "name": "pcre2",
-            "version": "10.48"
+            "version": "10.49"
           },
           {
             "licenses": [
@@ -1696,14 +1689,14 @@
               "ISCL"
             ],
             "name": "pkgconf",
-            "version": "3.0.5,1"
+            "version": "3.0.7,1"
           },
           {
             "licenses": [
               "BSD3CLAUSE"
             ],
             "name": "pmix",
-            "version": "5.0.10"
+            "version": "5.0.11"
           },
           {
             "licenses": [
@@ -1775,7 +1768,7 @@
               "BSD3CLAUSE"
             ],
             "name": "prrte",
-            "version": "3.0.13"
+            "version": "3.0.14"
           },
           {
             "licenses": [
@@ -1915,7 +1908,7 @@
               "BSL"
             ],
             "name": "py312-boost-libs",
-            "version": "1.91.0"
+            "version": "1.92.0"
           },
           {
             "licenses": [
@@ -2042,7 +2035,7 @@
               "MIT"
             ],
             "name": "py312-deepmerge",
-            "version": "2.1.0"
+            "version": "3.0.1"
           },
           {
             "licenses": [
@@ -2126,7 +2119,7 @@
               "BSD3CLAUSE"
             ],
             "name": "py312-fsspec",
-            "version": "2026.7.0"
+            "version": "2026.9.0"
           },
           {
             "licenses": [
@@ -2155,7 +2148,7 @@
               "PSFL"
             ],
             "name": "py312-greenlet",
-            "version": "3.5.5"
+            "version": "3.5.6"
           },
           {
             "licenses": [
@@ -2197,7 +2190,7 @@
               "MIT"
             ],
             "name": "py312-hatchling",
-            "version": "1.32.0"
+            "version": "1.32.4"
           },
           {
             "licenses": [
@@ -2260,7 +2253,7 @@
               "BSD3CLAUSE"
             ],
             "name": "py312-idna",
-            "version": "3.19"
+            "version": "3.20"
           },
           {
             "licenses": [
@@ -2429,7 +2422,7 @@
               "APACHE20"
             ],
             "name": "py312-ninja",
-            "version": "1.13.0"
+            "version": "1.13.2"
           },
           {
             "licenses": [
@@ -2522,7 +2515,7 @@
               "MIT"
             ],
             "name": "py312-platformdirs",
-            "version": "4.11.8"
+            "version": "4.11.12"
           },
           {
             "licenses": [
@@ -2536,7 +2529,7 @@
               "MIT"
             ],
             "name": "py312-prek",
-            "version": "0.5.2"
+            "version": "0.5.3"
           },
           {
             "licenses": [
@@ -2557,42 +2550,42 @@
               "APACHE20"
             ],
             "name": "py312-propcache",
-            "version": "0.4.1_1"
+            "version": "0.5.4"
           },
           {
             "licenses": [
               "BSD3CLAUSE"
             ],
             "name": "py312-protobuf",
-            "version": "7.36.1,1"
+            "version": "7.36.2,1"
           },
           {
             "licenses": [
               "LGPL3"
             ],
             "name": "py312-psycopg",
-            "version": "3.3.5"
+            "version": "3.3.6"
           },
           {
             "licenses": [
               "LGPL3"
             ],
             "name": "py312-psycopg-c",
-            "version": "3.3.5"
+            "version": "3.3.6"
           },
           {
             "licenses": [
               "LGPL3"
             ],
             "name": "py312-psycopg-pool",
-            "version": "3.3.1"
+            "version": "3.3.2"
           },
           {
             "licenses": [
               "BSD3CLAUSE"
             ],
             "name": "py312-pycparser",
-            "version": "2.23"
+            "version": "3.0"
           },
           {
             "licenses": [
@@ -2655,7 +2648,7 @@
               "MIT"
             ],
             "name": "py312-pyparsing",
-            "version": "3.3.2"
+            "version": "3.3.3"
           },
           {
             "licenses": [
@@ -2683,7 +2676,7 @@
               "BSD3CLAUSE"
             ],
             "name": "py312-pytorch",
-            "version": "2.14.0"
+            "version": "2.14.0_2"
           },
           {
             "licenses": [
@@ -2722,7 +2715,7 @@
           },
           {
             "licenses": [
-              "PSFL"
+              "APACHE20"
             ],
             "name": "py312-regex",
             "version": "2026.9.10"
@@ -2746,14 +2739,14 @@
               "MIT"
             ],
             "name": "py312-rpds-py",
-            "version": "0.30.0_7"
+            "version": "2026.6.3"
           },
           {
             "licenses": [
               "MIT"
             ],
             "name": "py312-ruff",
-            "version": "0.16.6_1"
+            "version": "0.16.9"
           },
           {
             "licenses": [
@@ -2816,7 +2809,7 @@
               "MIT"
             ],
             "name": "py312-sqlalchemy20",
-            "version": "2.0.52"
+            "version": "2.0.54"
           },
           {
             "licenses": [
@@ -2859,7 +2852,7 @@
               "BSD3CLAUSE"
             ],
             "name": "py312-threadpoolctl",
-            "version": "3.6.0"
+            "version": "3.7.0"
           },
           {
             "licenses": [
@@ -2915,7 +2908,7 @@
               "APACHE20"
             ],
             "name": "py312-tornado",
-            "version": "6.5.8"
+            "version": "6.5.10"
           },
           {
             "licenses": [
@@ -2930,14 +2923,14 @@
               "APACHE20"
             ],
             "name": "py312-trove-classifiers",
-            "version": "2026.6.1.19"
+            "version": "2026.9.21.13"
           },
           {
             "licenses": [
               "MIT"
             ],
             "name": "py312-truststore",
-            "version": "0.10.4"
+            "version": "0.10.4_1"
           },
           {
             "licenses": [
@@ -2951,7 +2944,7 @@
               "MIT"
             ],
             "name": "py312-typer",
-            "version": "0.27.2"
+            "version": "0.27.2_1"
           },
           {
             "licenses": [
@@ -2972,7 +2965,7 @@
               "MIT"
             ],
             "name": "py312-typing-inspection",
-            "version": "0.4.4"
+            "version": "0.4.4_1"
           },
           {
             "licenses": [
@@ -3008,14 +3001,14 @@
               "APACHE20"
             ],
             "name": "py312-unicodedata2",
-            "version": "17.0.1"
+            "version": "18.0.0"
           },
           {
             "licenses": [
               "MIT"
             ],
             "name": "py312-urllib3",
-            "version": "2.7.0,1"
+            "version": "2.8.0,1"
           },
           {
             "licenses": [
@@ -3037,14 +3030,14 @@
               "MIT"
             ],
             "name": "py312-watchfiles",
-            "version": "1.2.0_3"
+            "version": "1.3.0"
           },
           {
             "licenses": [
               "MIT"
             ],
             "name": "py312-wcwidth",
-            "version": "0.8.3"
+            "version": "0.8.4"
           },
           {
             "licenses": [
@@ -3086,7 +3079,7 @@
               "MIT"
             ],
             "name": "py312-zensical",
-            "version": "0.0.62"
+            "version": "0.0.65"
           },
           {
             "licenses": [
@@ -3121,7 +3114,7 @@
               "PSFL"
             ],
             "name": "python312",
-            "version": "3.12.14"
+            "version": "3.12.14_1"
           },
           {
             "licenses": [
@@ -3135,7 +3128,7 @@
               "GPLv3"
             ],
             "name": "readline",
-            "version": "8.3.3"
+            "version": "8.3.6"
           },
           {
             "licenses": [
@@ -3156,7 +3149,7 @@
               "GPLv2"
             ],
             "name": "sfcgal",
-            "version": "2.3.0_1"
+            "version": "2.3.0_2"
           },
           {
             "licenses": [
@@ -3364,7 +3357,7 @@
               "APACHE20"
             ],
             "name": "uv",
-            "version": "0.12.15"
+            "version": "0.12.19_1"
           },
           {
             "licenses": [
@@ -3427,14 +3420,14 @@
               "BSD2CLAUSE"
             ],
             "name": "xxhash",
-            "version": "0.8.3"
+            "version": "0.8.4"
           },
           {
             "licenses": [
               "APACHE20"
             ],
             "name": "yq",
-            "version": "4.1.2"
+            "version": "4.2.0"
           },
           {
             "licenses": [
@@ -3470,64 +3463,9 @@
         "java": [],
         "node": [
           {
-            "name": "@jupyterlite/app",
-            "purl": "",
-            "version": "0.2.3"
-          },
-          {
-            "name": "@jupyterlite/app-consoles",
-            "purl": "",
-            "version": "0.2.3"
-          },
-          {
-            "name": "@jupyterlite/app-edit",
-            "purl": "",
-            "version": "0.2.3"
-          },
-          {
-            "name": "@jupyterlite/app-lab",
-            "purl": "",
-            "version": "0.2.3"
-          },
-          {
-            "name": "@jupyterlite/app-notebooks",
-            "purl": "",
-            "version": "0.2.3"
-          },
-          {
-            "name": "@jupyterlite/app-repl",
-            "purl": "",
-            "version": "0.2.3"
-          },
-          {
-            "name": "@jupyterlite/app-tree",
-            "purl": "",
-            "version": "0.2.3"
-          },
-          {
-            "name": "@jupyterlite/pyodide-kernel-extension",
-            "purl": "",
-            "version": "0.5.2"
-          },
-          {
-            "name": "MathJax-grunt-cleaner",
-            "purl": "",
-            "version": "0.1.0"
-          },
-          {
             "name": "js",
             "purl": "",
             "version": "1.0.0"
-          },
-          {
-            "name": "jupyterlab-jupytext",
-            "purl": "",
-            "version": "1.4.5"
-          },
-          {
-            "name": "jupyterlab_pygments",
-            "purl": "",
-            "version": "0.3.0"
           }
         ],
         "php": [],
@@ -3820,7 +3758,7 @@
           {
             "name": "deepmerge",
             "purl": "",
-            "version": "2.1.0"
+            "version": "3.0.1"
           },
           {
             "name": "defusedxml",
@@ -4015,7 +3953,7 @@
           {
             "name": "greenlet",
             "purl": "",
-            "version": "3.5.5"
+            "version": "3.5.6"
           },
           {
             "name": "griffe",
@@ -4045,7 +3983,7 @@
           {
             "name": "hatchling",
             "purl": "",
-            "version": "1.32.0"
+            "version": "1.32.4"
           },
           {
             "name": "hf-xet",
@@ -4300,7 +4238,7 @@
           {
             "name": "ninja",
             "purl": "",
-            "version": "1.13.0"
+            "version": "1.13.2"
           },
           {
             "name": "nltk",
@@ -4325,7 +4263,7 @@
           {
             "name": "ocrmypdf",
             "purl": "",
-            "version": "17.12.1"
+            "version": "17.13.0"
           },
           {
             "name": "olefile",
@@ -4385,7 +4323,7 @@
           {
             "name": "pikepdf",
             "purl": "",
-            "version": "10.13.0.post1"
+            "version": "10.16.0"
           },
           {
             "name": "pillow",
@@ -4405,7 +4343,7 @@
           {
             "name": "platformdirs",
             "purl": "",
-            "version": "4.11.8"
+            "version": "4.11.12"
           },
           {
             "name": "pluggy",
@@ -4420,7 +4358,7 @@
           {
             "name": "prek",
             "purl": "",
-            "version": "0.5.2"
+            "version": "0.5.3"
           },
           {
             "name": "priority",
@@ -4445,27 +4383,27 @@
           {
             "name": "propcache",
             "purl": "",
-            "version": "0.4.1"
+            "version": "0.5.4"
           },
           {
             "name": "protobuf",
             "purl": "",
-            "version": "7.36.1"
+            "version": "7.36.2"
           },
           {
             "name": "psycopg",
             "purl": "",
-            "version": "3.3.5"
+            "version": "3.3.6"
           },
           {
             "name": "psycopg-c",
             "purl": "",
-            "version": "3.3.5"
+            "version": "3.3.6"
           },
           {
             "name": "psycopg-pool",
             "purl": "",
-            "version": "3.3.1"
+            "version": "3.3.2"
           },
           {
             "name": "py-ubjson",
@@ -4490,7 +4428,7 @@
           {
             "name": "pycparser",
             "purl": "",
-            "version": "2.23"
+            "version": "3.0"
           },
           {
             "name": "pydantic",
@@ -4535,7 +4473,7 @@
           {
             "name": "pyparsing",
             "purl": "",
-            "version": "3.3.2"
+            "version": "3.3.3"
           },
           {
             "name": "pyserial",
@@ -4665,12 +4603,12 @@
           {
             "name": "rpds-py",
             "purl": "",
-            "version": "0.30.0"
+            "version": "2026.6.3"
           },
           {
             "name": "ruff",
             "purl": "",
-            "version": "0.16.6"
+            "version": "0.16.9"
           },
           {
             "name": "safetensors",
@@ -4730,7 +4668,7 @@
           {
             "name": "sqlalchemy",
             "purl": "",
-            "version": "2.0.52"
+            "version": "2.0.54"
           },
           {
             "name": "sqlite-vec",
@@ -4770,7 +4708,7 @@
           {
             "name": "threadpoolctl",
             "purl": "",
-            "version": "3.6.0"
+            "version": "3.7.0"
           },
           {
             "name": "tika-client",
@@ -4820,7 +4758,7 @@
           {
             "name": "tornado",
             "purl": "",
-            "version": "6.5.8"
+            "version": "6.5.10"
           },
           {
             "name": "tqdm",
@@ -4835,7 +4773,7 @@
           {
             "name": "trove-classifiers",
             "purl": "",
-            "version": "2026.6.1.19"
+            "version": "2026.9.21.13"
           },
           {
             "name": "truststore",
@@ -4890,7 +4828,7 @@
           {
             "name": "unicodedata2",
             "purl": "",
-            "version": "17.0.1"
+            "version": "18.0.0"
           },
           {
             "name": "uritemplate",
@@ -4915,7 +4853,7 @@
           {
             "name": "watchfiles",
             "purl": "",
-            "version": "1.2.0"
+            "version": "1.3.0"
           },
           {
             "name": "wcwidth",
@@ -4965,12 +4903,12 @@
           {
             "name": "yq",
             "purl": "",
-            "version": "4.1.2"
+            "version": "4.2.0"
           },
           {
             "name": "zensical",
             "purl": "",
-            "version": "0.0.62"
+            "version": "0.0.65"
           },
           {
             "name": "zope.interface",
@@ -5050,15 +4988,15 @@
       "source": "upstream",
       "summary": {
         "dotnet": 0,
-        "freebsd": 485,
+        "freebsd": 484,
         "go": 0,
         "java": 0,
-        "node": 12,
+        "node": 1,
         "php": 0,
         "python": 292,
         "ruby": 0,
         "rust": 10,
-        "total": 799
+        "total": 787
       }
     }
   }
