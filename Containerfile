@@ -194,7 +194,7 @@ pkg update && pkg install -y uv git zip yq \
   py312-llama-index-core \
   py312-nltk \
   py312-Babel \
-  yq libxslt \
+  libxslt \
   mariadb118-client postgresql18-client openblas libheif poppler-utils \
   py312-psycopg-pool \
   py312-redis5 \
@@ -223,8 +223,6 @@ pkg update && pkg install -y uv git zip yq \
   py312-scikit-learn \
   py312-hatchling \
   py312-prek \
-  py312-scipy \
-  py312-numpy \
   py312-pillow \
   py312-rapidfuzz \
   py312-zensical \
@@ -250,6 +248,11 @@ pkg update && pkg install -y uv git zip yq \
   pngquant
 pkg clean -ay
 rm -rf /var/cache/pkg/* /var/db/pkg/repos/*
+find /usr/local -name '*.a' -delete
+rm -rf /usr/local/share/doc /usr/local/share/man /usr/local/include /usr/local/llvm19/include /usr/local/llvm19/bin
+rm -rf /usr/local/libexec/gcc14 /usr/local/bin/*-portbld-freebsd* /usr/local/*-portbld-freebsd*
+rm -f /usr/local/bin/gcc* /usr/local/bin/g++* /usr/local/bin/gfortran* /usr/local/bin/cpp* /usr/local/bin/c++*
+rm -f /usr/local/lib/libopcodes* /usr/local/lib/libbfd*
 CMD_EOF
 
 # Copy artifacts from build stage
@@ -259,6 +262,7 @@ COPY --from=builder /wheels /app/wheels
 RUN <<CMD_EOF
 tar xJvf /tmp/qpdf.tar.xz -C /usr/local --strip-components 1
 ldconfig -m /usr/local/lib
+rm -f /tmp/qpdf.tar.xz
 CMD_EOF
 
 ARG UPSTREAM_URL
@@ -286,12 +290,6 @@ RUN cd /usr/local/bin && ln -sf python3.12 python3 && chmod -h a+rx python3
 WORKDIR /app/src
 
 RUN <<CMD_EOF
-export FC=/usr/local/bin/gfortran14
-export CMAKE_EXECUTABLE=/usr/local/bin/cmake
-export SKBUILD_CMAKE_VERSION=""
-export SKBUILD_NINJA_VERSION=""
-export CMAKE_BUILD_PARALLEL_LEVEL=$(sysctl -n hw.ncpu)
-
 tomlq -t -i --arg new "sys_platform == 'freebsd15'" '.tool.uv.environments += [$new]' pyproject.toml
 tomlq -t -i 'del(.project.dependencies[] | select(test("^(pypdfium2|sqlite-vec|torch)"))) ' pyproject.toml
 tomlq -t -i '.tool.uv."exclude-dependencies" += ["pypdfium2","sqlite-vec","torch"]' pyproject.toml
@@ -339,6 +337,7 @@ uv lock --upgrade-package ocrmypdf --upgrade-package pikepdf --upgrade-package u
 AUTOBAHN_USE_NVX=0 uv sync --no-build-isolation-package autobahn || exit 1
 uv export -o requirements.txt || exit 1
 uv cache clean
+rm -rf /app/wheels
 CMD_EOF
 
 
