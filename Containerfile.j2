@@ -149,6 +149,27 @@ mv target/wheels/tantivy-*.whl /wheels/tantivy-0.26.0-py3-none-any.whl
 rm -fr /.cache /.cargo
 CMD_EOF
 
+# Build turbohtml wheel: meson-python, and ninja from PyPI has no FreeBSD wheel.
+# The version is the one the release's uv.lock pins, or uv falls back to the sdist.
+ARG UPSTREAM_URL
+ARG UPSTREAM_JQ
+RUN <<CMD_EOF
+pkg install -y ninja
+python3.12 -m venv /tmp/venv-turbohtml
+. /tmp/venv-turbohtml/bin/activate
+pip install "meson>=1.11.1" "meson-python>=0.20"
+
+TAG=$(fetch -qo - "${UPSTREAM_URL}" | python3.12 -c "import json,sys;print(json.load(sys.stdin)['tag_name'])")
+VER=$(fetch -qo - "https://raw.githubusercontent.com/paperless-ngx/paperless-ngx/${TAG}/uv.lock" | \
+  awk '/^name = "turbohtml"$/{f=1;next} f&&/^version = /{gsub(/"/,"",$3);print $3;exit}')
+[ -n "$VER" ] || { echo "turbohtml not in ${TAG}'s uv.lock"; exit 1; }
+pip wheel --no-deps --no-build-isolation --wheel-dir /tmp/turbohtml "turbohtml==${VER}"
+mv /tmp/turbohtml/turbohtml-*.whl /wheels/turbohtml-${VER}-py3-none-any.whl
+
+deactivate
+rm -fr /tmp/venv-turbohtml /tmp/turbohtml /.cache
+CMD_EOF
+
 
 FROM ghcr.io/daemonless/base:${BASE_VERSION}
 
