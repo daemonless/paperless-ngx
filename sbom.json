@@ -1,11 +1,11 @@
 {
-  "generated": "2026-10-05T01:51:26Z",
+  "generated": "2026-10-06T20:44:07Z",
   "image": "paperless-ngx",
   "tags": {
     "latest": {
-      "app_version": "3.2.1",
+      "app_version": "3.3.0",
       "arch": "amd64",
-      "generated": "2026-10-05T01:48:09Z",
+      "generated": "2026-10-06T20:39:46Z",
       "packages": {
         "dotnet": [],
         "freebsd": [
@@ -403,7 +403,7 @@
               "LGPL3+"
             ],
             "name": "ffmpeg",
-            "version": "9.0.2,1"
+            "version": "9.0.2_1,1"
           },
           {
             "licenses": [
@@ -1034,7 +1034,7 @@
               "LGPL3+"
             ],
             "name": "libheif",
-            "version": "1.22.2_3"
+            "version": "1.22.2_4"
           },
           {
             "licenses": [
@@ -1512,7 +1512,7 @@
               "BSD3CLAUSE"
             ],
             "name": "openexr",
-            "version": "3.4.15_2"
+            "version": "3.4.16"
           },
           {
             "licenses": [
@@ -2414,7 +2414,7 @@
               "BSD3CLAUSE"
             ],
             "name": "py312-networkx",
-            "version": "3.6_2,2"
+            "version": "3.7,2"
           },
           {
             "licenses": [
@@ -2676,7 +2676,7 @@
               "BSD3CLAUSE"
             ],
             "name": "py312-pytorch",
-            "version": "2.14.0_2"
+            "version": "2.14.1"
           },
           {
             "licenses": [
@@ -2774,7 +2774,7 @@
               "BSD3CLAUSE"
             ],
             "name": "py312-scipy",
-            "version": "1.17.1_4,1"
+            "version": "1.17.1_5,1"
           },
           {
             "licenses": [
@@ -3016,7 +3016,7 @@
               "APACHE20"
             ],
             "name": "py312-uvloop",
-            "version": "0.22.1"
+            "version": "0.23.0"
           },
           {
             "licenses": [
@@ -3079,7 +3079,7 @@
               "MIT"
             ],
             "name": "py312-zensical",
-            "version": "0.0.65"
+            "version": "0.0.67"
           },
           {
             "licenses": [
@@ -3191,7 +3191,7 @@
               "NCSA"
             ],
             "name": "spirv-llvm-translator-llvm19",
-            "version": "19.1.22"
+            "version": "19.1.23"
           },
           {
             "licenses": [
@@ -3392,7 +3392,7 @@
               "GPLv2+"
             ],
             "name": "x265",
-            "version": "4.1"
+            "version": "4.2"
           },
           {
             "licenses": [
@@ -3478,12 +3478,12 @@
           {
             "name": "Django",
             "purl": "",
-            "version": "5.2.16"
+            "version": "5.2.17"
           },
           {
             "name": "Faker",
             "purl": "",
-            "version": "40.38.0"
+            "version": "40.39.0"
           },
           {
             "name": "ImageHash",
@@ -3508,7 +3508,7 @@
           {
             "name": "PyJWT",
             "purl": "",
-            "version": "2.13.0"
+            "version": "2.15.0"
           },
           {
             "name": "PyWavelets",
@@ -3598,7 +3598,7 @@
           {
             "name": "autobahn",
             "purl": "",
-            "version": "25.12.2"
+            "version": "26.7.1"
           },
           {
             "name": "azure-ai-documentintelligence",
@@ -3629,11 +3629,6 @@
             "name": "billiard",
             "purl": "",
             "version": "4.2.4"
-          },
-          {
-            "name": "bleach",
-            "purl": "",
-            "version": "6.4.0"
           },
           {
             "name": "bottleneck",
@@ -3823,12 +3818,12 @@
           {
             "name": "django-filter",
             "purl": "",
-            "version": "25.2"
+            "version": "26.1"
           },
           {
             "name": "django-guardian",
             "purl": "",
-            "version": "3.4.1"
+            "version": "3.5.0"
           },
           {
             "name": "django-multiselectfield",
@@ -3908,7 +3903,7 @@
           {
             "name": "flower",
             "purl": "",
-            "version": "2.1.0"
+            "version": "2.2.0"
           },
           {
             "name": "fonttools",
@@ -3999,11 +3994,6 @@
             "name": "hpack",
             "purl": "",
             "version": "4.2.0"
-          },
-          {
-            "name": "html5lib",
-            "purl": "",
-            "version": "1.1"
           },
           {
             "name": "httpcore",
@@ -4233,7 +4223,7 @@
           {
             "name": "networkx",
             "purl": "",
-            "version": "3.6"
+            "version": "3.7"
           },
           {
             "name": "ninja",
@@ -4406,11 +4396,6 @@
             "version": "3.3.2"
           },
           {
-            "name": "py-ubjson",
-            "purl": "",
-            "version": "0.16.1"
-          },
-          {
             "name": "pyOpenSSL",
             "purl": "",
             "version": "26.4.0"
@@ -4521,9 +4506,14 @@
             "version": "3.15.1"
           },
           {
+            "name": "pytest-randomly",
+            "purl": "",
+            "version": "5.0.0"
+          },
+          {
             "name": "pytest-rerunfailures",
             "purl": "",
-            "version": "16.6.1"
+            "version": "16.7"
           },
           {
             "name": "pytest-sugar",
@@ -4633,7 +4623,7 @@
           {
             "name": "sentence-transformers",
             "purl": "",
-            "version": "6.0.1"
+            "version": "6.1.0"
           },
           {
             "name": "service-identity",
@@ -4753,7 +4743,7 @@
           {
             "name": "torch",
             "purl": "",
-            "version": "2.14.0a0+gitunknown"
+            "version": "2.14.1a0+gitunknown"
           },
           {
             "name": "tornado",
@@ -4779,6 +4769,11 @@
             "name": "truststore",
             "purl": "",
             "version": "0.10.4"
+          },
+          {
+            "name": "turbohtml",
+            "purl": "",
+            "version": "1.10.0"
           },
           {
             "name": "txaio",
@@ -4838,12 +4833,12 @@
           {
             "name": "urllib3",
             "purl": "",
-            "version": "2.7.0"
+            "version": "2.8.0"
           },
           {
             "name": "uvloop",
             "purl": "",
-            "version": "0.22.1"
+            "version": "0.23.0"
           },
           {
             "name": "vine",
@@ -4859,11 +4854,6 @@
             "name": "wcwidth",
             "purl": "",
             "version": "0.5.0"
-          },
-          {
-            "name": "webencodings",
-            "purl": "",
-            "version": "0.5.1"
           },
           {
             "name": "wheel",
@@ -4908,7 +4898,7 @@
           {
             "name": "zensical",
             "purl": "",
-            "version": "0.0.65"
+            "version": "0.0.67"
           },
           {
             "name": "zope.interface",
@@ -4993,10 +4983,10 @@
         "java": 0,
         "node": 1,
         "php": 0,
-        "python": 292,
+        "python": 290,
         "ruby": 0,
         "rust": 10,
-        "total": 787
+        "total": 785
       }
     }
   }
