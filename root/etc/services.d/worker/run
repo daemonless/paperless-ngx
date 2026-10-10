@@ -7,6 +7,7 @@ echo "${log_prefix} Starting worker..."
 
 HOME=/config; export HOME
 LANG=en_US.UTF-8; export LANG
+. /etc/paperless-secret-key
 
 # Standard start command for worker
 #/usr/local/bin/s6-notifyoncheck -c /healthz /usr/local/bin/s6-setuidgid bsd

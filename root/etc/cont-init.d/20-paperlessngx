@@ -5,14 +5,17 @@
 mkdir -p /config/consume /config/data /config/media
 chown -R bsd:bsd /config
 
+. /etc/paperless-secret-key
+
 # Run a DB migration to make sure the database is initialized
-# and updated to the latest schema.
+# and updated to the latest schema. The venv's python, not `uv run`: uv
+# wants /app/wheels, which the build prunes, and the migration never ran.
 echo [paperlessngx-migration] Running DB migration
-s6-setuidgid bsd cd /app/src/src uv run python manage.py migrate
+s6-setuidgid bsd cd /app/src/src /app/venv/bin/python manage.py migrate
 
 # Create superuser if env variable is defined
 if [ "x${PAPERLESS_ADMIN_USER}" != "x" ]; then
-  s6-setuidgid bsd cd /app/src/src uv run python manage.py manage_superuser
+  s6-setuidgid bsd cd /app/src/src /app/venv/bin/python manage.py manage_superuser
 
   echo "[paperlessngx-superuser] Superuser creation done"
 
