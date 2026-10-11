@@ -12,6 +12,13 @@ x-daemonless:
   mlock: false
   community: "Discord:https://discord.gg/Kb9tkhecZT"
   upstream_binary: true
+  # paperless is the one people open; redis stays on the stack's private
+  # network, where paperless finds it by the name fjord puts in REDIS_HOSTNAME.
+  networking:
+    paperlessngx: default
+    "*": private
+  hostnames:
+    redis: REDIS_HOSTNAME
   # Redis sidecar for the AppJail director bundle; host networking so
   # paperless reaches it on localhost, as under podman.
   appjail:
@@ -20,7 +27,7 @@ x-daemonless:
         - alias:
         - ip4_inherit:
     depends_on:
-      - name: paperless-redis
+      - name: redis
         image: ghcr.io/daemonless/redis:latest
         volumes:
           redis_data: /config
@@ -35,6 +42,10 @@ x-daemonless:
         desc: "Optional separate document store (originals, archive, thumbnails), e.g. its own ZFS filesystem"
         optional: true
       REDIS_DATA_LOCATION: "Path to store the redis data"
+      REDIS_HOSTNAME:
+        desc: "Where paperless finds redis (fjord sets this; localhost on host networking)"
+        level: advanced
+        optional: true
       PAPERLESS_ADMIN_USER:
         desc: "Set name of the admin user on first start"
         optional: true
@@ -94,7 +105,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=${TZ:-UTC}
-      - PAPERLESS_REDIS=redis://localhost:6379
+      - PAPERLESS_REDIS=redis://${REDIS_HOSTNAME:-localhost}:6379
       - PAPERLESS_ADMIN_USER=${PAPERLESS_ADMIN_USER}
       - PAPERLESS_ADMIN_PASSWORD=${PAPERLESS_ADMIN_PASSWORD}
 
