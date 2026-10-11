@@ -27,7 +27,7 @@ A community-supported open-source document management system that transforms you
 
 | Service | Image | Role | |
 |---|---|---|---|
-| **paperlessngx** | `ghcr.io/daemonless/paperless-ngx:latest` |  | [docs](https://github.com/daemonless/paperless-ngx) |
+| **paperless-ngx** | `ghcr.io/daemonless/paperless-ngx:latest` |  | [docs](https://github.com/daemonless/paperless-ngx) |
 | **redis** | `ghcr.io/daemonless/redis:latest` |  | [docs](https://github.com/daemonless/redis) |
 
 ## Prerequisites
@@ -66,7 +66,7 @@ PAPERLESS_ADMIN_PASSWORD=
 name: paperless-ngx
 
 services:
-  paperlessngx:
+  paperless-ngx:
     image: ghcr.io/daemonless/paperless-ngx:latest
     restart: unless-stopped
     network_mode: host
@@ -231,7 +231,7 @@ To configure the admin user with a password during the first startup, you can de
 additional environment variables in your container file:
 ```yaml
 services:
-  paperlessngx:
+  paperless-ngx:
     env:
       - PAPERLESS_ADMIN_USER=""
       - PAPERLESS_ADMIN_PASSWORD=""
