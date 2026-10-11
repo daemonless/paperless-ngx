@@ -75,7 +75,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=${TZ:-UTC}
-      - PAPERLESS_REDIS=redis://localhost:6379
+      - PAPERLESS_REDIS=redis://${REDIS_HOSTNAME:-localhost}:6379
       - PAPERLESS_ADMIN_USER=${PAPERLESS_ADMIN_USER}
       - PAPERLESS_ADMIN_PASSWORD=${PAPERLESS_ADMIN_PASSWORD}
 
@@ -113,12 +113,13 @@ DIRECTOR_PROJECT=paperless-ngx
 PUID=1000
 PGID=1000
 TZ=UTC
-PAPERLESS_REDIS=redis://localhost:6379
+PAPERLESS_REDIS=redis://${REDIS_HOSTNAME:-localhost}:6379
 PAPERLESS_ADMIN_USER=admin
 PAPERLESS_ADMIN_PASSWORD=<PAPERLESS_ADMIN_PASSWORD>
 CONFIG_LOCATION=/containers/paperless-ngx/config
 DOCUMENTS_LOCATION=
 REDIS_DATA_LOCATION=/containers/paperless-ngx/redis
+REDIS_HOSTNAME=
 ```
 
 **appjail-director.yml**:
@@ -148,10 +149,11 @@ services:
         - CONFIG_LOCATION: !ENV '${CONFIG_LOCATION}'
         - DOCUMENTS_LOCATION: !ENV '${DOCUMENTS_LOCATION}'
         - REDIS_DATA_LOCATION: !ENV '${REDIS_DATA_LOCATION}'
+        - REDIS_HOSTNAME: !ENV '${REDIS_HOSTNAME}'
     volumes:
       - paperless-ngx: /config
-  paperless-redis:
-    name: paperless_redis
+  redis:
+    name: redis
     options:
       - from: ghcr.io/daemonless/redis:latest
       - template: !ENV '${PWD}/template.conf'
@@ -195,12 +197,13 @@ Access at: `http://localhost:8000`
 | `PUID` | `1000` | User ID for the application process |
 | `PGID` | `1000` | Group ID for the application process |
 | `TZ` | `UTC` | Timezone for the container |
-| `PAPERLESS_REDIS` | `redis://localhost:6379` |  |
+| `PAPERLESS_REDIS` | `redis://${REDIS_HOSTNAME:-localhost}:6379` |  |
 | `PAPERLESS_ADMIN_USER` | `admin` | Set name of the admin user on first start |
 | `PAPERLESS_ADMIN_PASSWORD` | `<PAPERLESS_ADMIN_PASSWORD>` | Set password of the admin user on first start |
 | `CONFIG_LOCATION` | `/containers/paperless-ngx/config` | Path to store configuration, database and (by default) documents |
 | `DOCUMENTS_LOCATION` | `` | Optional separate document store (originals, archive, thumbnails), e.g. its own ZFS filesystem |
 | `REDIS_DATA_LOCATION` | `/containers/paperless-ngx/redis` | Path to store the redis data |
+| `REDIS_HOSTNAME` | `` | Where paperless finds redis (fjord sets this; localhost on host networking) |
 
 ### Volumes
 
