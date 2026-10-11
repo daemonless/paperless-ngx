@@ -15,7 +15,7 @@ x-daemonless:
   # paperless is the one people open; redis stays on the stack's private
   # network, where paperless finds it by the name fjord puts in REDIS_HOSTNAME.
   networking:
-    paperlessngx: default
+    paperless-ngx: default
     "*": private
   hostnames:
     redis: REDIS_HOSTNAME
@@ -74,7 +74,7 @@ x-daemonless:
     additional environment variables in your container file:
     ```yaml
     services:
-      paperlessngx:
+      paperless-ngx:
         env:
           - PAPERLESS_ADMIN_USER=""
           - PAPERLESS_ADMIN_PASSWORD=""
@@ -96,7 +96,7 @@ x-daemonless:
     ```
 
 services:
-  paperlessngx:
+  paperless-ngx:
     image: ghcr.io/daemonless/paperless-ngx:latest
     restart: unless-stopped
     network_mode: host
