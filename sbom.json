@@ -1,11 +1,11 @@
 {
-  "generated": "2026-10-11T11:20:49Z",
+  "generated": "2026-10-13T07:35:32Z",
   "image": "paperless-ngx",
   "tags": {
     "latest": {
-      "app_version": "3.3.0",
+      "app_version": "3.3.1",
       "arch": "amd64",
-      "generated": "2026-10-11T11:16:53Z",
+      "generated": "2026-10-13T07:30:07Z",
       "packages": {
         "dotnet": [],
         "freebsd": [
@@ -337,7 +337,7 @@
               "MPL20"
             ],
             "name": "ca_root_nss",
-            "version": "3.130"
+            "version": "3.131"
           },
           {
             "licenses": [
@@ -573,7 +573,7 @@
               "EPL"
             ],
             "name": "graphviz",
-            "version": "16.1.0"
+            "version": "16.1.0_1"
           },
           {
             "licenses": [
@@ -3072,7 +3072,7 @@
               "APACHE20"
             ],
             "name": "py312-yarl",
-            "version": "1.24.5"
+            "version": "1.25.1"
           },
           {
             "licenses": [
@@ -3413,7 +3413,7 @@
               "MIT"
             ],
             "name": "xorgproto",
-            "version": "2025.1"
+            "version": "2026.1"
           },
           {
             "licenses": [
@@ -4313,7 +4313,7 @@
           {
             "name": "pikepdf",
             "purl": "",
-            "version": "10.16.0"
+            "version": "10.17.0"
           },
           {
             "name": "pillow",
@@ -4888,7 +4888,7 @@
           {
             "name": "yarl",
             "purl": "",
-            "version": "1.24.5"
+            "version": "1.25.1"
           },
           {
             "name": "yq",
