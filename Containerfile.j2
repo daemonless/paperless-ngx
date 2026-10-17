@@ -345,7 +345,8 @@ tomlq -t -i '
     "llama-index-core","rpds-py","hf-xet","watchfiles"]
 ' pyproject.toml
 uv venv --system-site-packages || exit 1
-uv lock --upgrade-package ocrmypdf --upgrade-package pikepdf --upgrade-package uharfbuzz --upgrade-package tantivy
+uv lock --upgrade-package ocrmypdf --upgrade-package pikepdf --upgrade-package uharfbuzz --upgrade-package tantivy \
+   --upgrade-package turbohtml
 # autobahn (via daphne) has no FreeBSD wheel and ports dropped py-autobahn, so it
 # builds from sdist: skip its NVX C extension (no compiler in the image) and
 # build without isolation so its cffi/hatchling build deps come from pkg.

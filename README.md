@@ -117,9 +117,7 @@ PAPERLESS_REDIS=redis://${REDIS_HOSTNAME:-localhost}:6379
 PAPERLESS_ADMIN_USER=admin
 PAPERLESS_ADMIN_PASSWORD=<PAPERLESS_ADMIN_PASSWORD>
 CONFIG_LOCATION=/containers/paperless-ngx/config
-DOCUMENTS_LOCATION=
 REDIS_DATA_LOCATION=/containers/paperless-ngx/redis
-REDIS_HOSTNAME=
 ```
 
 **appjail-director.yml**:
@@ -135,8 +133,6 @@ services:
     name: paperless_ngx
     options:
       - container: 'args:--pull'
-      - expose: '8000:8000 proto:tcp'
-      - expose: '5555:5555 proto:tcp'
     oci:
       user: root
       environment:
@@ -147,9 +143,7 @@ services:
         - PAPERLESS_ADMIN_USER: !ENV '${PAPERLESS_ADMIN_USER}'
         - PAPERLESS_ADMIN_PASSWORD: !ENV '${PAPERLESS_ADMIN_PASSWORD}'
         - CONFIG_LOCATION: !ENV '${CONFIG_LOCATION}'
-        - DOCUMENTS_LOCATION: !ENV '${DOCUMENTS_LOCATION}'
         - REDIS_DATA_LOCATION: !ENV '${REDIS_DATA_LOCATION}'
-        - REDIS_HOSTNAME: !ENV '${REDIS_HOSTNAME}'
     volumes:
       - paperless-ngx: /config
   redis:
@@ -185,8 +179,7 @@ Save the files above, then run `appjail-director up`.
 > Exposing ports in AppJail means that your service can be reached from remote hosts. If that is not your intention, do not expose the ports and communicate with the service using the jail's IPv4 address or hostname assigned by the virtual network.
 >
 > To avoid exposing ports, just remove the `expose` option in your `appjail-director.yml` or from your command-line arguments.
-
-Access at: `http://localhost:8000`
+Open `http://<server>:8000` from another machine (the server's own browser can't use a published port).
 
 ## Parameters
 
