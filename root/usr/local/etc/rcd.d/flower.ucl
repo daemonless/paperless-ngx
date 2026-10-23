@@ -1,0 +1,7 @@
+name = "flower";
+provides = ["flower"];
+type = "simple";
+enable = true;
+command = "/daemonless/libexec/flower";
+process { env_file = "/run/rcd.env"; }
+restart { policy = "always"; max_retries = 0; delay = 5000; backoff = "none"; }

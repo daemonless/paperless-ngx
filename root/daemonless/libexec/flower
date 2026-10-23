@@ -1,5 +1,5 @@
 #!/bin/sh
-# Paperless-ngx flower s6 service
+# Paperless-ngx flower rcd unit
 
 readonly log_prefix="[flower]"
 
@@ -14,12 +14,11 @@ if [ "x${PAPERLESS_ENABLE_FLOWER}" != "x" ]; then
     # Small delay to allow celery to be up first
     echo "${log_prefix} Starting flower in 5s"
     sleep 5
-
-    exec /usr/local/bin/s6-setuidgid bsd cd /app/src/src \
+    cd /app/src/src
+    exec dsu bsd \
          /app/venv/bin/python -m celery --app paperless flower --url-prefix=flower --loglevel INFO
 else
     echo "${log_prefix} Not starting flower"
-    # https://skarnet.org/software/s6/s6-svc.html
-    s6-svc -Od .
+    # Disabled: idle (an exit would be restarted). FreeBSD sleep has no "infinity".
+    exec sleep 2147483647
 fi
-

@@ -18,4 +18,6 @@ services:
 
   redis:
     image: ghcr.io/daemonless/redis:latest
+    # paperless is on the host network and finds redis on localhost
+    network_mode: host
     restart: unless-stopped

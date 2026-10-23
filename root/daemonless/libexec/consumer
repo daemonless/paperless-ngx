@@ -1,5 +1,5 @@
 #!/bin/sh
-# Paperless-ngx consumer s6 service
+# Paperless-ngx consumer rcd unit
 
 readonly log_prefix="[cosumer]"
 
@@ -10,5 +10,6 @@ LANG=en_US.UTF-8; export LANG
 . /etc/paperless-secret-key
 
 # Standard start command for consumer
-exec /usr/local/bin/s6-setuidgid bsd cd /app/src/src \
+cd /app/src/src
+exec dsu bsd \
      /app/venv/bin/python manage.py document_consumer

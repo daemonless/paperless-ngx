@@ -11,11 +11,11 @@ chown -R bsd:bsd /config
 # and updated to the latest schema. The venv's python, not `uv run`: uv
 # wants /app/wheels, which the build prunes, and the migration never ran.
 echo [paperlessngx-migration] Running DB migration
-s6-setuidgid bsd cd /app/src/src /app/venv/bin/python manage.py migrate
+(cd /app/src/src && dsu bsd /app/venv/bin/python manage.py migrate) || exit 1
 
 # Create superuser if env variable is defined
 if [ "x${PAPERLESS_ADMIN_USER}" != "x" ]; then
-  s6-setuidgid bsd cd /app/src/src /app/venv/bin/python manage.py manage_superuser
+  (cd /app/src/src && dsu bsd /app/venv/bin/python manage.py manage_superuser) || exit 1
 
   echo "[paperlessngx-superuser] Superuser creation done"
 

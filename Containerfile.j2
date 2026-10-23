@@ -4,7 +4,7 @@ ARG UPSTREAM_URL="https://api.github.com/repos/paperless-ngx/paperless-ngx/relea
 ARG UPSTREAM_JQ=".tag_name"
 ARG TARBALL_JQ=".assets[0].browser_download_url"
 
-FROM ghcr.io/daemonless/base:${BASE_VERSION} AS builder
+FROM ghcr.io/daemonless/base-exec:${BASE_VERSION} AS builder
 
 # Use local package cache
 ARG PKG_CACHE_URL
@@ -170,9 +170,7 @@ deactivate
 rm -fr /tmp/venv-turbohtml /tmp/turbohtml /.cache
 CMD_EOF
 
-
-FROM ghcr.io/daemonless/base:${BASE_VERSION}
-
+FROM ghcr.io/daemonless/base-rcd:${BASE_VERSION}
 
 # Use local package cache
 ARG PKG_CACHE_URL
@@ -297,7 +295,7 @@ rm -f /tmp/paperless.tar.xz
 CMD_EOF
 
 # Setup bsd user for build
-RUN /etc/cont-init.d/10-usermod
+RUN /daemonless/init.d/10-usermod
 
 # Add python3 symlink
 RUN cd /usr/local/bin && ln -sf python3.12 python3 && chmod -h a+rx python3
@@ -355,7 +353,6 @@ uv export -o requirements.txt || exit 1
 uv cache clean
 rm -rf /app/wheels
 CMD_EOF
-
 
 ARG FREEBSD_ARCH=amd64
 
@@ -419,9 +416,10 @@ RUN su -m bsd -c "cd /app/src/src && uv run python -c 'from paperless import ver
 
 # Copy root filesystem
 COPY root/ /
+RUN chmod +x /daemonless/libexec/* /daemonless/init.d/*
 
 ## Set permissions
-RUN chmod +x /etc/services.d/*/run /etc/cont-init.d/* /healthz 2>/dev/null || true
+RUN chmod +x /healthz
 
 ## Temporary fix for regex timeout
 RUN <<CMD_EOF
