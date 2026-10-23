@@ -1,11 +1,11 @@
 {
-  "generated": "2026-10-23T07:31:54Z",
+  "generated": "2026-10-23T17:17:13Z",
   "image": "paperless-ngx",
   "tags": {
     "latest": {
       "app_version": "3.3.4",
       "arch": "amd64",
-      "generated": "2026-10-23T07:27:04Z",
+      "generated": "2026-10-23T17:13:07Z",
       "packages": {
         "dotnet": [],
         "freebsd": [
@@ -189,13 +189,6 @@
               "BSD2CLAUSE"
             ],
             "name": "FreeBSD-pkg-bootstrap",
-            "version": "15.1"
-          },
-          {
-            "licenses": [
-              "BSD2CLAUSE"
-            ],
-            "name": "FreeBSD-rc",
             "version": "15.1"
           },
           {
@@ -491,13 +484,6 @@
             ],
             "name": "espeak-ng",
             "version": "1.52.0_1"
-          },
-          {
-            "licenses": [
-              "ISCL"
-            ],
-            "name": "execline",
-            "version": "2.9.8.1"
           },
           {
             "licenses": [
@@ -4294,13 +4280,6 @@
           },
           {
             "licenses": [
-              "ISCL"
-            ],
-            "name": "s6",
-            "version": "2.14.0.1"
-          },
-          {
-            "licenses": [
               "ZLIB"
             ],
             "name": "sdl2",
@@ -4326,13 +4305,6 @@
             ],
             "name": "shared-mime-info",
             "version": "2.4_2"
-          },
-          {
-            "licenses": [
-              "ISCL"
-            ],
-            "name": "skalibs",
-            "version": "2.14.5.1"
           },
           {
             "licenses": [
@@ -6652,7 +6624,7 @@
       "source": "upstream",
       "summary": {
         "dotnet": 0,
-        "freebsd": 655,
+        "freebsd": 651,
         "go": 0,
         "java": 0,
         "node": 1,
@@ -6660,7 +6632,7 @@
         "python": 381,
         "ruby": 0,
         "rust": 10,
-        "total": 1047
+        "total": 1043
       }
     }
   }
