@@ -1,11 +1,11 @@
 {
-  "generated": "2026-10-20T00:29:07Z",
+  "generated": "2026-10-23T07:31:54Z",
   "image": "paperless-ngx",
   "tags": {
     "latest": {
-      "app_version": "3.3.3",
+      "app_version": "3.3.4",
       "arch": "amd64",
-      "generated": "2026-10-20T00:24:23Z",
+      "generated": "2026-10-23T07:27:04Z",
       "packages": {
         "dotnet": [],
         "freebsd": [
@@ -210,7 +210,7 @@
               "BSD2CLAUSE"
             ],
             "name": "FreeBSD-runtime",
-            "version": "15.1p5"
+            "version": "15.1p6"
           },
           {
             "licenses": [
@@ -756,14 +756,14 @@
               "MIT"
             ],
             "name": "harfbuzz",
-            "version": "14.5.1"
+            "version": "14.6.0"
           },
           {
             "licenses": [
               "MIT"
             ],
             "name": "harfbuzz-icu",
-            "version": "14.5.1"
+            "version": "14.6.0"
           },
           {
             "licenses": [
@@ -942,7 +942,7 @@
               "MIT"
             ],
             "name": "libX11",
-            "version": "1.8.13_1,1"
+            "version": "1.8.14,1"
           },
           {
             "licenses": [
@@ -1019,7 +1019,7 @@
               "MIT"
             ],
             "name": "libXi",
-            "version": "1.8.3,1"
+            "version": "1.8.4,1"
           },
           {
             "licenses": [
@@ -1040,7 +1040,7 @@
               "MIT"
             ],
             "name": "libXpm",
-            "version": "3.5.19"
+            "version": "3.5.20"
           },
           {
             "licenses": [
@@ -1054,7 +1054,7 @@
               "MIT"
             ],
             "name": "libXrender",
-            "version": "0.9.12"
+            "version": "0.9.13"
           },
           {
             "licenses": [
@@ -1075,7 +1075,7 @@
               "MIT"
             ],
             "name": "libXtst",
-            "version": "1.2.5"
+            "version": "1.2.6"
           },
           {
             "licenses": [
@@ -2102,7 +2102,7 @@
               "ISCL"
             ],
             "name": "pkgconf",
-            "version": "3.0.7,1"
+            "version": "3.0.9,1"
           },
           {
             "licenses": [
@@ -2680,7 +2680,7 @@
               "MIT"
             ],
             "name": "py312-filelock",
-            "version": "4.1.0"
+            "version": "4.2.4"
           },
           {
             "licenses": [
@@ -2898,7 +2898,7 @@
               "BSD3CLAUSE"
             ],
             "name": "py312-httpcore2",
-            "version": "2.13.1"
+            "version": "2.14.0"
           },
           {
             "licenses": [
@@ -2919,7 +2919,7 @@
               "BSD3CLAUSE"
             ],
             "name": "py312-httpx2",
-            "version": "2.13.1"
+            "version": "2.14.0"
           },
           {
             "licenses": [
@@ -3094,7 +3094,7 @@
               "MIT"
             ],
             "name": "py312-litellm-proxy-extras",
-            "version": "0.4.109"
+            "version": "0.4.110"
           },
           {
             "licenses": [
@@ -3815,7 +3815,7 @@
               "MIT"
             ],
             "name": "py312-ruff",
-            "version": "0.17.0_1"
+            "version": "0.17.1"
           },
           {
             "licenses": [
@@ -4548,7 +4548,7 @@
               "APACHE20"
             ],
             "name": "uv",
-            "version": "0.13.0_1"
+            "version": "0.13.1"
           },
           {
             "licenses": [
@@ -4947,7 +4947,7 @@
           {
             "name": "certifi",
             "purl": "",
-            "version": "2026.1.4"
+            "version": "2026.10.19"
           },
           {
             "name": "cffi",
@@ -5392,7 +5392,7 @@
           {
             "name": "httpcore2",
             "purl": "",
-            "version": "2.13.1"
+            "version": "2.14.0"
           },
           {
             "name": "httpx",
@@ -5412,7 +5412,7 @@
           {
             "name": "httpx2",
             "purl": "",
-            "version": "2.13.1"
+            "version": "2.14.0"
           },
           {
             "name": "huggingface-hub",
@@ -5567,7 +5567,7 @@
           {
             "name": "litellm-proxy-extras",
             "purl": "",
-            "version": "0.4.109"
+            "version": "0.4.110"
           },
           {
             "name": "llama-index-core",
@@ -6217,7 +6217,7 @@
           {
             "name": "ruff",
             "purl": "",
-            "version": "0.17.0"
+            "version": "0.17.1"
           },
           {
             "name": "s3transfer",
