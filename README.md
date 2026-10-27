@@ -21,7 +21,7 @@ A community-supported open-source document management system that transforms you
 ## Version Tags
 | Tag | Description | Best For |
 | :--- | :--- | :--- |
-| `latest` | Built from latest upstream release and latest FreeBSD packages. | Most users — recommended. |
+| `latest` | Built from latest upstream release and quarterly FreeBSD packages. | Most users — recommended. |
 
 ## Parts
 

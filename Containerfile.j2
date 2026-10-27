@@ -6,25 +6,6 @@ ARG TARBALL_JQ=".assets[0].browser_download_url"
 
 FROM ghcr.io/daemonless/base-exec:${BASE_VERSION} AS builder
 
-# Use local package cache
-ARG PKG_CACHE_URL
-RUN <<CMD_EOF
-if [ -z "$PKG_CACHE_URL" ]; then
-    exit 0
-fi
-
-mkdir -p /usr/local/etc/pkg/repos || true
-cat <<EOF >/usr/local/etc/pkg/repos/FreeBSD.conf
-FreeBSD-Ports: {
-  url: "http://${PKG_CACHE_URL}/\${ABI}/latest",
-  mirror_type: "none",
-  signature_type: "fingerprints",
-  fingerprints: "/usr/share/keys/pkg",
-  enabled: yes
-}
-EOF
-CMD_EOF
-
 # Install build tools
 RUN <<CMD_EOF
 pkg update -r FreeBSD-base && pkg install -r FreeBSD-base -y FreeBSD-set-devel
@@ -171,25 +152,6 @@ rm -fr /tmp/venv-turbohtml /tmp/turbohtml /.cache
 CMD_EOF
 
 FROM ghcr.io/daemonless/base-rcd:${BASE_VERSION}
-
-# Use local package cache
-ARG PKG_CACHE_URL
-RUN <<CMD_EOF
-if [ -z "$PKG_CACHE_URL" ]; then
-    exit 0
-fi
-
-mkdir -p /usr/local/etc/pkg/repos || true
-cat <<EOF >/usr/local/etc/pkg/repos/FreeBSD.conf
-FreeBSD-Ports: {
-  url: "http://${PKG_CACHE_URL}/\${ABI}/latest",
-  mirror_type: "none",
-  signature_type: "fingerprints",
-  fingerprints: "/usr/share/keys/pkg",
-  enabled: yes
-}
-EOF
-CMD_EOF
 
 RUN <<CMD_EOF
 pkg update && pkg install -y uv git zip yq \
