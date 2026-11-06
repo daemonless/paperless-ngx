@@ -7,6 +7,7 @@ cit:
   compose: true
   mode: screenshot
   ssim_threshold: 0.85
+  edge_threshold: 0.004
   port: 8000
   health: /
 build:
