@@ -9,14 +9,7 @@ FROM ghcr.io/daemonless/base-exec:${BASE_VERSION} AS builder
 # Install build tools
 RUN <<CMD_EOF
 pkg update -r FreeBSD-base && pkg install -r FreeBSD-base -y FreeBSD-set-devel
-pkg install -y cmake git py312-pip rust
-pkg clean -ay
-rm -rf /var/cache/pkg/* /var/db/pkg/repos/*
-CMD_EOF
-
-# Install build dependencies
-RUN <<CMD_EOF
-pkg install -y jpeg-turbo pngquant
+pkg install -y cmake git py312-pip rust jpeg-turbo pngquant ninja
 pkg clean -ay
 rm -rf /var/cache/pkg/* /var/db/pkg/repos/*
 CMD_EOF
@@ -135,7 +128,8 @@ CMD_EOF
 ARG UPSTREAM_URL
 ARG UPSTREAM_JQ
 RUN <<CMD_EOF
-pkg install -y ninja
+export CMAKE_EXECUTABLE=/usr/local/bin/cmake
+export CMAKE_MAKE_PROGRAM=/usr/local/bin/ninja
 python3.12 -m venv /tmp/venv-turbohtml
 . /tmp/venv-turbohtml/bin/activate
 pip install "meson>=1.11.1" "meson-python>=0.20"
@@ -150,6 +144,7 @@ mv /tmp/turbohtml/turbohtml-*.whl /wheels/turbohtml-${VER}-py3-none-any.whl
 deactivate
 rm -fr /tmp/venv-turbohtml /tmp/turbohtml /.cache
 CMD_EOF
+
 
 FROM ghcr.io/daemonless/base-rcd:${BASE_VERSION}
 
@@ -235,7 +230,7 @@ COPY --from=builder /src/qpdf/build/qpdf*.tar.xz /tmp/qpdf.tar.xz
 COPY --from=builder /wheels /app/wheels
 
 RUN <<CMD_EOF
-tar xJvf /tmp/qpdf.tar.xz -C /usr/local --strip-components 1
+tar xJf /tmp/qpdf.tar.xz -C /usr/local --strip-components 1
 ldconfig -m /usr/local/lib
 rm -f /tmp/qpdf.tar.xz
 CMD_EOF
@@ -274,6 +269,8 @@ tomlq -t -i '
   | .tool.uv."no-build-package" += ["tantivy"]
 ' pyproject.toml
 tomlq -t -i 'del(.tool.uv.sources.torch)' pyproject.toml
+WHEEL=$(ls /app/wheels/turbohtml-*.whl) && \
+    tomlq -t -i ".tool.uv.sources.turbohtml.path = \"$WHEEL\"" pyproject.toml
 # tomlq -t -i '.tool.uv."no-build-package" += ["pypdfium2","sqlite-vec","pytorch"]' pyproject.toml
 # Replace versions
 tomlq -t -i '
@@ -374,14 +371,11 @@ ENV PAPERLESS_NLTK_DIR=/app/nltk_data \
     GRANIAN_HOST=0.0.0.0
 
 # Extract version information
-RUN su -m bsd -c "cd /app/src/src && uv run python -c 'from paperless import version; print(version.__full_version_str__)' > /app/version"
+RUN su -m bsd -c "cd /app/src/src && /app/venv/bin/python -c 'from paperless import version; print(version.__full_version_str__)' > /app/version"
 
-# Copy root filesystem
+# Copy root filesystem and set permissions
 COPY root/ /
-RUN chmod +x /daemonless/libexec/* /daemonless/init.d/*
-
-## Set permissions
-RUN chmod +x /healthz
+RUN chmod +x /daemonless/libexec/* /daemonless/init.d/* /healthz
 
 ## Temporary fix for regex timeout
 RUN <<CMD_EOF
