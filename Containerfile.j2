@@ -9,102 +9,14 @@ FROM ghcr.io/daemonless/base-exec:${BASE_VERSION} AS builder
 # Install build tools
 RUN <<CMD_EOF
 pkg update -r FreeBSD-base && pkg install -r FreeBSD-base -y FreeBSD-set-devel
-pkg install -y cmake git py312-pip rust jpeg-turbo pngquant ninja
+pkg install -y cmake git py312-pip rust ninja
 pkg clean -ay
 rm -rf /var/cache/pkg/* /var/db/pkg/repos/*
 CMD_EOF
 
-# Build libqpdf
-RUN <<CMD_EOF
-cat > /tmp/freebsd-toolchain.cmake <<'EOF'
-set(CMAKE_C_FLAGS_INIT "-ftls-model=initial-exec")
-set(CMAKE_CXX_FLAGS_INIT "-ftls-model=initial-exec -I/usr/local/include")
-EOF
-
-mkdir src && cd src
-git clone https://github.com/qpdf/qpdf.git --branch v12.4.1
-cd qpdf
-export CFLAGS="-ftls-model=initial-exec"
-export CXXFLAGS="-ftls-model=initial-exec"
-cmake -S . -B build \
-  -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_INSTALL_PREFIX=/usr/local \
-  -DCMAKE_BUILD_PARALLEL_LEVEL=$(sysctl -n hw.ncpu) \
-  -DCMAKE_TOOLCHAIN_FILE=/tmp/freebsd-toolchain.cmake
-
-cmake --build build --parallel $(sysctl -n hw.ncpu)
-cmake --install build
-
-ldconfig -m /usr/local/lib
-
-cd build
-cpack -G TXZ
-
-# Cleanup to save space
-cd ..
-rm -fr qpdf
-CMD_EOF
-
-# Build pikepdf wheel
-RUN <<CMD_EOF
-cd /
-mkdir /wheels
-
-export CFLAGS="-ftls-model=initial-exec"
-export CXXFLAGS="-ftls-model=initial-exec -I/usr/local/include"
-export LDFLAGS="-L/usr/local/lib"
-export CMAKE_BUILD_PARALLEL_LEVEL=$(sysctl -n hw.ncpu)
-export CMAKE_ARGS="-DCMAKE_C_FLAGS=-ftls-model=initial-exec -DCMAKE_CXX_FLAGS=-ftls-model=initial-exec"
-pip wheel --no-deps --wheel-dir /wheels/ \
-  -Ccmake.define.CMAKE_TOOLCHAIN_FILE=/tmp/freebsd-toolchain.cmake \
-  pikepdf
-
-version=$(ls -1 /wheels/pikepdf*.whl  | sed -E 's/.*-([0-9]+\.[0-9]+\.[0-9]+)-.*/\1/')
-mv /wheels/pikepdf*.whl /wheels/pikepdf-${version}-py3-none-any.whl 
-
-# Cleanup to save space
-rm -fr /.cache
-CMD_EOF
-
-# Build uharfbuzz wheel
-RUN <<CMD_EOF
-cd /
-
-export CFLAGS="-ftls-model=initial-exec"
-export CXXFLAGS="-ftls-model=initial-exec -I/usr/local/include"
-export LDFLAGS="-L/usr/local/lib"
-export CMAKE_BUILD_PARALLEL_LEVEL=$(sysctl -n hw.ncpu)
-export CMAKE_ARGS="-DCMAKE_C_FLAGS=-ftls-model=initial-exec -DCMAKE_CXX_FLAGS=-ftls-model=initial-exec"
-pip wheel --wheel-dir wheels/ \
-  -Ccmake.define.CMAKE_TOOLCHAIN_FILE=/tmp/freebsd-toolchain.cmake \
-  uharfbuzz
-
-version=$(ls -1 /wheels/uharfbuzz*.whl  | sed -E 's/.*-([0-9]+\.[0-9]+\.[0-9]+)-.*/\1/')
-mv /wheels/uharfbuzz*.whl /wheels/uharfbuzz-${version}-py3-none-any.whl 
-
-# Build ocrmypdf wheel
-rm -fr /.cache
-CMD_EOF
-
-RUN <<CMD_EOF
-cd /
-
-export CFLAGS="-ftls-model=initial-exec"
-export CXXFLAGS="-ftls-model=initial-exec -I/usr/local/include"
-export LDFLAGS="-L/usr/local/lib"
-export CMAKE_BUILD_PARALLEL_LEVEL=$(sysctl -n hw.ncpu)
-export CMAKE_ARGS="-DCMAKE_C_FLAGS=-ftls-model=initial-exec -DCMAKE_CXX_FLAGS=-ftls-model=initial-exec"
-pip wheel --no-deps --wheel-dir wheels/ ocrmypdf
-
-version=$(ls -1 /wheels/ocrmypdf*.whl  | sed -E 's/.*-([0-9]+\.[0-9]+\.[0-9]+)-.*/\1/')
-mv /wheels/ocrmypdf*.whl /wheels/ocrmypdf-${version}-py3-none-any.whl 
-
-# Build ocrmypdf wheel
-rm -fr /.cache
-CMD_EOF
-
 # Build tantivy wheel
 RUN <<CMD_EOF
+mkdir -p /src /wheels
 cd /src
 
 export CFLAGS="-ftls-model=initial-exec"
@@ -199,6 +111,9 @@ pkg update && pkg install -y uv git zip yq \
   py312-ninja \
   py312-pywavelets \
   py312-uharfbuzz \
+  py312-pikepdf \
+  py312-ocrmypdf \
+  qpdf \
   py312-langdetect \
   py312-tokenizers \
   py312-tiktoken \
@@ -225,15 +140,8 @@ rm -f /usr/local/bin/gcc* /usr/local/bin/g++* /usr/local/bin/gfortran* /usr/loca
 rm -f /usr/local/lib/libopcodes* /usr/local/lib/libbfd*
 CMD_EOF
 
-# Copy artifacts from build stage
-COPY --from=builder /src/qpdf/build/qpdf*.tar.xz /tmp/qpdf.tar.xz
+# Copy wheels from build stage
 COPY --from=builder /wheels /app/wheels
-
-RUN <<CMD_EOF
-tar xJf /tmp/qpdf.tar.xz -C /usr/local --strip-components 1
-ldconfig -m /usr/local/lib
-rm -f /tmp/qpdf.tar.xz
-CMD_EOF
 
 ARG UPSTREAM_URL
 ARG UPSTREAM_JQ
@@ -277,7 +185,8 @@ tomlq -t -i '
   .project.dependencies
   |= map(
     if test("^celery")                   then "celery~=5.3.1"
-    elif test("^ocrmypdf")               then "ocrmypdf>=17.11.0"
+    elif test("^ocrmypdf")               then "ocrmypdf>=16.11.0"
+    elif test("^pikepdf")                then "pikepdf>=9.11.0"
     else . end
   )
 # Remove dependencies on some transient dependencies
@@ -298,12 +207,11 @@ tomlq -t -i '
   .tool.uv."exclude-dependencies" += ["hiredis","msgpack","pyyaml","regex","jiter","safetensors","greenlet",
     "zxing-cpp","time-machine","cffi","zstandard","cryptography","brotli","ujson","aiohttp","ruff","pi-heif",
     "lxml","scikit-learn","prek","scipy","numpy","pillow","rapidfuzz","zensical","ninja","uvloop",
-    "granian","pywavelets","uharfbuzz","langdetect","tokenizers","tiktoken","tornado","pydantic",
+    "granian","pywavelets","uharfbuzz","pikepdf","ocrmypdf","langdetect","tokenizers","tiktoken","tornado","pydantic",
     "llama-index-core","rpds-py","hf-xet","watchfiles"]
 ' pyproject.toml
 uv venv --system-site-packages || exit 1
-uv lock --upgrade-package ocrmypdf --upgrade-package pikepdf --upgrade-package uharfbuzz --upgrade-package tantivy \
-   --upgrade-package turbohtml
+uv lock --upgrade-package tantivy --upgrade-package turbohtml
 # autobahn (via daphne) has no FreeBSD wheel and ports dropped py-autobahn, so it
 # builds from sdist: skip its NVX C extension (no compiler in the image) and
 # build without isolation so its cffi/hatchling build deps come from pkg.
