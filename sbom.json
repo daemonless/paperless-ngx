@@ -1,11 +1,11 @@
 {
-  "generated": "2026-11-12T10:59:37Z",
+  "generated": "2026-11-17T09:09:35Z",
   "image": "paperless-ngx",
   "tags": {
     "latest": {
-      "app_version": "3.4.2",
+      "app_version": "3.5.0",
       "arch": "amd64",
-      "generated": "2026-11-12T10:56:40Z",
+      "generated": "2026-11-17T09:05:46Z",
       "packages": {
         "dotnet": [],
         "freebsd": [
@@ -305,8 +305,8 @@
           },
           {
             "licenses": [
-              "LGPL3",
-              "GPLv3"
+              "GPLv3",
+              "LGPL3"
             ],
             "name": "binutils",
             "version": "2.44,1"
@@ -385,8 +385,8 @@
           },
           {
             "licenses": [
-              "GPLv3+",
-              "LGPL3+"
+              "LGPL3+",
+              "GPLv3+"
             ],
             "name": "ffmpeg",
             "version": "9.0.2,1"
@@ -467,8 +467,8 @@
           },
           {
             "licenses": [
-              "GPLv3+",
-              "LGPL21+"
+              "LGPL21+",
+              "GPLv3+"
             ],
             "name": "gettext-runtime",
             "version": "1.0_1"
@@ -492,7 +492,7 @@
               "GPLv2"
             ],
             "name": "git",
-            "version": "2.56.0"
+            "version": "2.56.1"
           },
           {
             "licenses": [
@@ -517,16 +517,16 @@
           },
           {
             "licenses": [
-              "LGPL3",
-              "GPLv3"
+              "GPLv3",
+              "LGPL3"
             ],
             "name": "gnupg",
             "version": "2.5.24"
           },
           {
             "licenses": [
-              "GPLv3+",
-              "LGPL21+"
+              "LGPL21+",
+              "GPLv3+"
             ],
             "name": "gnutls",
             "version": "3.8.13"
@@ -559,7 +559,7 @@
               "EPL"
             ],
             "name": "graphviz",
-            "version": "16.1.0_2"
+            "version": "16.1.0_3"
           },
           {
             "licenses": [
@@ -1056,7 +1056,7 @@
               "BSD3CLAUSE"
             ],
             "name": "libjxl",
-            "version": "0.12.0"
+            "version": "0.12.0_1"
           },
           {
             "licenses": [
@@ -1068,8 +1068,8 @@
           {
             "licenses": [
               "GPLv2",
-              "LGPL3",
-              "GPLv3"
+              "GPLv3",
+              "LGPL3"
             ],
             "name": "libksba",
             "version": "1.8.1"
@@ -1213,8 +1213,8 @@
           {
             "licenses": [
               "GPLv2",
-              "LGPL3+",
-              "GFDL"
+              "GFDL",
+              "LGPL3+"
             ],
             "name": "libunistring",
             "version": "1.4.2"
@@ -1423,8 +1423,8 @@
           },
           {
             "licenses": [
-              "LGPL3",
-              "GPLv3"
+              "GPLv3",
+              "LGPL3"
             ],
             "name": "munge",
             "version": "0.5.18"
@@ -1498,7 +1498,7 @@
               "BSD3CLAUSE"
             ],
             "name": "openexr",
-            "version": "3.4.17"
+            "version": "3.4.18"
           },
           {
             "licenses": [
@@ -1668,7 +1668,7 @@
               "BSD2CLAUSE"
             ],
             "name": "pkg",
-            "version": "2.8.4"
+            "version": "2.9.2"
           },
           {
             "licenses": [
@@ -1922,7 +1922,7 @@
               "MPL20"
             ],
             "name": "py312-certifi",
-            "version": "2026.7.22"
+            "version": "2026.10.23"
           },
           {
             "licenses": [
@@ -2838,7 +2838,7 @@
               "PSFL"
             ],
             "name": "py312-sqlite3",
-            "version": "3.12.15_10"
+            "version": "3.12.16_10"
           },
           {
             "licenses": [
@@ -2894,7 +2894,7 @@
               "PSFL"
             ],
             "name": "py312-tkinter",
-            "version": "3.12.15_11"
+            "version": "3.12.16_11"
           },
           {
             "licenses": [
@@ -3128,7 +3128,7 @@
               "PSFL"
             ],
             "name": "python312",
-            "version": "3.12.15"
+            "version": "3.12.16"
           },
           {
             "licenses": [
@@ -3491,7 +3491,7 @@
           {
             "name": "Faker",
             "purl": "",
-            "version": "40.39.0"
+            "version": "40.43.0"
           },
           {
             "name": "ImageHash",
@@ -3801,7 +3801,7 @@
           {
             "name": "django-allauth",
             "purl": "",
-            "version": "65.20.1"
+            "version": "65.21.1"
           },
           {
             "name": "django-auditlog",
@@ -3852,11 +3852,6 @@
             "name": "django-soft-delete",
             "purl": "",
             "version": "1.0.23"
-          },
-          {
-            "name": "django-treenode",
-            "purl": "",
-            "version": "0.25.0"
           },
           {
             "name": "djangorestframework",
@@ -4496,7 +4491,7 @@
           {
             "name": "pytest-env",
             "purl": "",
-            "version": "1.7.1"
+            "version": "1.8.1"
           },
           {
             "name": "pytest-httpx",
@@ -4506,7 +4501,7 @@
           {
             "name": "pytest-mock",
             "purl": "",
-            "version": "3.15.1"
+            "version": "3.17.0"
           },
           {
             "name": "pytest-randomly",
@@ -4536,7 +4531,7 @@
           {
             "name": "python-dotenv",
             "purl": "",
-            "version": "1.2.3"
+            "version": "1.2.4"
           },
           {
             "name": "python-gnupg",
@@ -4671,7 +4666,7 @@
           {
             "name": "sqlite3",
             "purl": "",
-            "version": "3.12.15"
+            "version": "3.12.16"
           },
           {
             "name": "sqlparse",
@@ -4726,7 +4721,7 @@
           {
             "name": "tkinter",
             "purl": "",
-            "version": "3.12.15"
+            "version": "3.12.16"
           },
           {
             "name": "tokenizers",
@@ -4986,10 +4981,10 @@
         "java": 0,
         "node": 1,
         "php": 0,
-        "python": 289,
+        "python": 288,
         "ruby": 0,
         "rust": 10,
-        "total": 785
+        "total": 784
       }
     }
   }
