@@ -15,7 +15,7 @@ FROM ghcr.io/daemonless/base-exec:${BASE_VERSION} AS builder
 # Install build tools
 RUN <<CMD_EOF
 pkg update -r FreeBSD-base && pkg install -r FreeBSD-base -y FreeBSD-set-devel
-pkg install -y cmake git py312-pip rust jpeg-turbo pngquant ninja
+pkg install -y cmake-core git py312-pip rust jpeg-turbo pngquant ninja
 pkg clean -ay
 rm -rf /var/cache/pkg/* /var/db/pkg/repos/*
 CMD_EOF
